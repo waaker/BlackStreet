@@ -1,0 +1,240 @@
+openapi: 3.0.1
+info:
+  title: sftp-app
+  description: SFTP management.
+  license:
+    name: GPL-3.0-or-later
+    url: https://www.gnu.org/licenses/gpl-3.0.fr.html
+  version: 1.0.0
+servers:
+- url: http://waak.ddns.net/api
+tags:
+- name: account
+- name: server
+- name: auth
+paths:
+  /account:
+    get:
+      tags:
+      - account
+      summary: Get list of accounts
+      operationId: ""
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    post:
+      tags:
+      - account
+      summary: Create account
+      operationId: ""
+      requestBody:
+        description: Account object to create
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      responses:
+        201:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+      x-codegen-request-body-name: account
+  /account/{accountId}:
+    get:
+      tags:
+      - account
+      summary: Get account by account ID
+      operationId: ""
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    delete:
+      tags:
+      - account
+      summary: Delete account
+      operationId: ""
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: succesful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /server:
+    get:
+      tags:
+      - server
+      summary: Get list of servers
+      operationId: ""
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    post:
+      tags:
+      - server
+      summary: Create server
+      operationId: ""
+      requestBody:
+        description: Server object to create
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Server'
+        required: true
+      responses:
+        201:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+      x-codegen-request-body-name: server
+  /server/{serverId}:
+    get:
+      tags:
+      - server
+      summary: Get server by server ID
+      operationId: ""
+      parameters:
+      - name: serverId
+        in: path
+        description: ID of server to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    delete:
+      tags:
+      - server
+      summary: Delete server
+      operationId: ""
+      parameters:
+      - name: serverId
+        in: path
+        description: ID of server to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: succesful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Login
+      operationId: ""
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - accountHash
+              - accountName
+              properties:
+                accountName:
+                  type: string
+                  description: account name
+                accountHash:
+                  type: string
+                  description: account hashed password
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /auth/logout:
+    post:
+      tags:
+      - auth
+      summary: Logout
+      operationId: ""
+      requestBody:
+        description: ID of the account to logout
+        content:
+          '*/*':
+            schema:
+              type: string
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+      x-codegen-request-body-name: accountId
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        accountName:
+          type: string
+        hash:
+          type: string
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Server'
+    Server:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        serverName:
+          type: string
+        address:
+          type: string
+        account:
+          $ref: '#/components/schemas/Account'
