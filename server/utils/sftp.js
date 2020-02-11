@@ -1,0 +1,17 @@
+const Client = require('ftp')
+const config = require('config')
+
+const sftpClient = new Client()
+
+sftpClient.connect({
+  host: config.get('General.host'),
+  port: config.get('General.port'),
+  user: config.get('General.user'),
+  password: config.get('General.password'),
+  secure: true,
+  secureOptions: {
+    rejectUnauthorized: false
+  }
+})
+
+module.exports = sftpClient

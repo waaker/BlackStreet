@@ -9,6 +9,9 @@
   "author": "waaker",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "express": "^4.17.1"
+    "config": "^3.2.5",
+    "express": "^4.17.1",
+    "ftp": "^0.3.10",
+    "standard": "^14.3.1"
   }
 }

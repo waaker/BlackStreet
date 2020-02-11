@@ -148,3 +148,4 @@ temp/
 
 # End of https://www.gitignore.io/api/node,angular,visualstudiocode
 
+local.json
