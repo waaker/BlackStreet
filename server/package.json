@@ -11,7 +11,9 @@
   "dependencies": {
     "config": "^3.2.5",
     "express": "^4.17.1",
-    "ftp": "^0.3.10",
+    "ftp": "^0.3.10"
+  },
+  "devDependencies": {
     "standard": "^14.3.1"
   }
 }
