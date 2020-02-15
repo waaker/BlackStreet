@@ -1,5 +1,6 @@
 const Client = require('ftp')
 const config = require('config')
+const fs = require('fs')
 
 const sftpClient = new Client()
 
@@ -10,7 +11,7 @@ sftpClient.connect({
   password: config.get('General.password'),
   secure: true,
   secureOptions: {
-    rejectUnauthorized: false
+    ca: [fs.readFileSync(config.get('General.certificate_path'))]
   }
 })
 

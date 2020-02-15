@@ -148,4 +148,9 @@ temp/
 
 # End of https://www.gitignore.io/api/node,angular,visualstudiocode
 
+### Additional
+
+# Do not share personnal servers information
 local.json
+# Do not share certificates
+certificates/
