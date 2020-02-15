@@ -5,13 +5,13 @@ const fs = require('fs')
 const sftpClient = new Client()
 
 sftpClient.connect({
-  host: config.get('General.host'),
-  port: config.get('General.port'),
-  user: config.get('General.user'),
-  password: config.get('General.password'),
+  host: config.get('Server_1.host'),
+  port: config.get('Server_1.port'),
+  user: config.get('Server_1.user'),
+  password: config.get('Server_1.password'),
   secure: true,
   secureOptions: {
-    ca: [fs.readFileSync(config.get('General.certificate_path'))]
+    ca: [fs.readFileSync(config.get('Server_1.certificate_path'))]
   }
 })
 

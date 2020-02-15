@@ -1,0 +1,12 @@
+{
+    "General": {
+        "port": 3000
+    },
+    "Server_1": {
+        "host": "hostname",
+        "port": 21,
+        "user": "username",
+        "password": "password",
+        "certificate_path": "/path/to/certificate.pem"
+    }
+}
