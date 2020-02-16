@@ -12,10 +12,10 @@ const AccountSchema = new Schema({
     type: String,
     required: true
   },
-  servers: {
+  sftp_servers: {
     type: [{
       type: ObjectId,
-      ref: 'Server'
+      ref: 'SFTP_Server'
     }]
   }
 })
