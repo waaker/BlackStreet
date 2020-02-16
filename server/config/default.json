@@ -2,6 +2,11 @@
     "General": {
         "port": 3000
     },
+    "Database": {
+        "uri": "localhost",
+        "port": 27017,
+        "name": "sftp-app"
+    },
     "Server_1": {
         "host": "hostname",
         "port": 21,
