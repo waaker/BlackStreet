@@ -110,7 +110,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/SFTP_Server'
+              $ref: '#/components/schemas/SftpServer'
         required: true
       responses:
         201:
@@ -119,7 +119,7 @@ paths:
         500:
           description: internal server error
           content: {}
-      x-codegen-request-body-name: SFTP_Server
+      x-codegen-request-body-name: SftpServer
   /sftp_server/{serverId}:
     get:
       tags:
@@ -225,8 +225,8 @@ components:
         servers:
           type: array
           items:
-            $ref: '#/components/schemas/SFTP_Server'
-    SFTP_Server:
+            $ref: '#/components/schemas/SftpServer'
+    SftpServer:
       type: object
       properties:
         _id:

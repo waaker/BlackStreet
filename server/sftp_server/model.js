@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { ObjectId } = Schema.Types
 
-const SFTPServerSchema = new Schema({
+const SftpServerSchema = new Schema({
   host: {
     type: String,
     required: true
@@ -29,6 +29,6 @@ const SFTPServerSchema = new Schema({
   }
 })
 
-const model = mongoose.model('SFTP_Server', SFTPServerSchema)
+const model = mongoose.model('SftpServer', SftpServerSchema)
 
 module.exports = model
