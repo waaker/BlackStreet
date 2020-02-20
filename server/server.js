@@ -1,11 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
+const bodyParser = require('body-parser')
 
 const routes = require('./routes')
 
 const app = express()
 
+app.use(bodyParser.json())
 app.use('/', routes)
 
 mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
