@@ -1,3 +1,3 @@
-const sftp = require('./sftp')
+const ftps = require('./ftps')
 
-module.exports = sftp
+module.exports = ftps

@@ -1,8 +1,8 @@
 const express = require('express')
-const sftpServerRoutes = require('./sftp_server')
+const ftpsServerRoutes = require('./ftps_server')
 
 const router = express.Router()
 
-router.use('/sftp_server', sftpServerRoutes)
+router.use('/ftps_server', ftpsServerRoutes)
 
 module.exports = router

@@ -1,7 +1,7 @@
 {
-  "name": "sftp-app-server",
+  "name": "ftps-app-server",
   "version": "1.0.0",
-  "description": "SFTP Management - server part",
+  "description": "FTPS Management - server part",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

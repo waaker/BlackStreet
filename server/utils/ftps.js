@@ -2,9 +2,9 @@ const Client = require('ftp')
 const config = require('config')
 const fs = require('fs')
 
-const sftpClient = new Client()
+const ftpsClient = new Client()
 
-sftpClient.connect({
+ftpsClient.connect({
   host: config.get('Server_1.host'),
   port: config.get('Server_1.port'),
   user: config.get('Server_1.user'),
@@ -15,4 +15,4 @@ sftpClient.connect({
   }
 })
 
-module.exports = sftpClient
+module.exports = ftpsClient

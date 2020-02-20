@@ -1,2 +1,2 @@
-# sftp-app
-SFTP management
+# ftps-app
+FTPS management

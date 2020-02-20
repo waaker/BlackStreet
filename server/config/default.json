@@ -5,7 +5,7 @@
     "Database": {
         "uri": "localhost",
         "port": 27017,
-        "name": "sftp-app"
+        "name": "ftps-app"
     },
     "Server_1": {
         "host": "hostname",
