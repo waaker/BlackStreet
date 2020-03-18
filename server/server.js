@@ -12,7 +12,8 @@ app.use('/', routes)
 
 mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }).then(() => {
   app.listen(config.get('General.port'), function () {
     console.log(`App listening on port ${config.get('General.port')}\nDatabase connected on port ${config.get('Database.port')}`)
