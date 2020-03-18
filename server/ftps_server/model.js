@@ -29,6 +29,21 @@ const FtpsServerSchema = new Schema({
   }
 })
 
+FtpsServerSchema.statics = {
+  getFtpsServers: async function () {
+    const ftpsServers = await this.find()
+    return ftpsServers
+  },
+  createFtpsServer: async function (f) {
+    const ftpsServer = await this.create(f)
+    return ftpsServer
+  },
+  deleteFtpsServers: async function () {
+    const ftpsServers = await this.deleteMany({})
+    return ftpsServers
+  }
+}
+
 const model = mongoose.model('FtpsServer', FtpsServerSchema)
 
 module.exports = model
