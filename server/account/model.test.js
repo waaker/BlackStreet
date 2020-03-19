@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const { model: Account } = require('.')
 
 beforeAll(async () => {
-  await mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
+  await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
