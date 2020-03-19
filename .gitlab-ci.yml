@@ -1,23 +1,12 @@
 image: node:alpine
 
 stages:
-  - build
   - test
-
-server_build:
-  stage: build
-  before_script:
-    - cd server
-  script:
-    - npm install
-  after_script:
-    - cd ..
 
 server_test:
   stage: test
   before_script:
     - cd server
+    - npm install
   script:
     - npm test
-  after_script:
-    - cd ..
