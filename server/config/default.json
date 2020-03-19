@@ -5,7 +5,7 @@
     "Database": {
         "uri": "localhost",
         "port": 27017,
-        "name": "ftps-app"
+        "name": "ftps_app_db"
     },
     "Server_1": {
         "host": "hostname",

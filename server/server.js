@@ -16,6 +16,6 @@ mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database
   useCreateIndex: true
 }).then(() => {
   app.listen(config.get('General.port'), function () {
-    console.log(`App listening on port ${config.get('General.port')}\nDatabase connected on port ${config.get('Database.port')}`)
+    console.log(`App listening on port ${config.get('General.port')}\nDatabase ${config.get('Database.name')} connected on port ${config.get('Database.port')}`)
   })
 })

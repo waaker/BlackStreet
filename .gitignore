@@ -151,6 +151,6 @@ temp/
 ### Additional
 
 # Do not share personnal servers information
-local.json
+local*.json
 # Do not share certificates
 certificates/
