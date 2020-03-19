@@ -1,10 +1,12 @@
+/* eslint-env jest */
+
 const mongoose = require('mongoose')
 const config = require('config')
 const bcrypt = require('bcrypt')
 const { model: Account } = require('.')
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGO_URI, {
+  await mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

@@ -3,10 +3,6 @@ image: node:alpine
 services:
   - mongo
 
-variables:
-  NODE_ENV: 'test'
-  MONGO_URI: 'mongodb://mongo/ci_db'
-
 stages:
   - test
 
