@@ -34,4 +34,19 @@ describe('insert', () => {
     expect(mongooseAccount.accountName).toEqual(mockAccount.accountName)
     expect(bcrypt.compareSync(mockAccount.password, mongooseAccount.hash)).toBe(true)
   }, 10000)
+
+  it('should create an account and find it in the accounts list', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      ftpsServers: []
+    }
+
+    await Account.createAccount(mockAccount)
+    const mongooseAccounts = await Account.getAccounts()
+
+    expect(mongooseAccounts.length).toEqual(1)
+    expect(mongooseAccounts[0].accountName).toEqual(mockAccount.accountName)
+    expect(bcrypt.compareSync(mockAccount.password, mongooseAccounts[0].hash)).toBe(true)
+  }, 10000)
 })
