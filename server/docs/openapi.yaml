@@ -17,8 +17,8 @@ paths:
     get:
       tags:
       - account
-      summary: Get list of accounts
-      operationId: ""
+      summary: Get all accounts
+      operationId: "getAccounts"
       responses:
         200:
           description: successful operation
@@ -30,7 +30,7 @@ paths:
       tags:
       - account
       summary: Create account
-      operationId: ""
+      operationId: "createAccount"
       requestBody:
         description: Account object to create
         content:
@@ -46,12 +46,24 @@ paths:
           description: internal server error
           content: {}
       x-codegen-request-body-name: account
+    delete:
+      tags:
+      - account
+      summary: Delete all accounts
+      operationId: "deleteAccounts"
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
   /account/{accountId}:
     get:
       tags:
       - account
       summary: Get account by account ID
-      operationId: ""
+      operationId: "getAccount"
       parameters:
       - name: accountId
         in: path
@@ -71,7 +83,7 @@ paths:
       tags:
       - account
       summary: Delete account
-      operationId: ""
+      operationId: "deleteAccount"
       parameters:
       - name: accountId
         in: path
@@ -91,8 +103,8 @@ paths:
     get:
       tags:
       - ftps_server
-      summary: Get list of FTPS servers
-      operationId: ""
+      summary: Get all FTPS servers
+      operationId: "getFtpsServers"
       responses:
         200:
           description: successful operation
@@ -104,7 +116,7 @@ paths:
       tags:
       - ftps_server
       summary: Create FTPS server
-      operationId: ""
+      operationId: "createFtpsServer"
       requestBody:
         description: FTPS Server object to create
         content:
@@ -120,12 +132,24 @@ paths:
           description: internal server error
           content: {}
       x-codegen-request-body-name: FtpsServer
+    delete:
+      tags:
+      - ftps_server
+      summary: Delete all FTPS servers
+      operationId: "deleteFtpsServers"
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
   /ftps_server/{serverId}:
     get:
       tags:
       - ftps_server
       summary: Get FTPS server by server ID
-      operationId: ""
+      operationId: "getFtpsServer"
       parameters:
       - name: serverId
         in: path
@@ -145,7 +169,7 @@ paths:
       tags:
       - ftps_server
       summary: Delete FTPS server
-      operationId: ""
+      operationId: "deleteFtpsServer"
       parameters:
       - name: serverId
         in: path
