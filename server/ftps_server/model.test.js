@@ -80,6 +80,31 @@ describe('insert', () => {
     expect(FtpsServers[0].certificate_path).toEqual(mockFtpsServer.certificate_path)
     expect(FtpsServers[0].account).toEqual(mongooseAccount._id)
   }, 10000)
+
+  it('should create a ftps server and link it to the account', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      ftpsServers: []
+    }
+
+    let mongooseAccount = await Account.createAccount(mockAccount)
+
+    const mockFtpsServer = {
+      host: 'myTestHost',
+      port: 21,
+      user: 'myTestUser',
+      password: 'myTestPassword',
+      certificate_path: 'myTestPath',
+      account: mongooseAccount._id
+    }
+
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+
+    mongooseAccount = await Account.findById(mongooseAccount._id)
+    expect(mongooseAccount.ftpsServers.length).toEqual(1)
+    expect(mongooseAccount.ftpsServers[0]).toEqual(mongooseFtpsServer._id)
+  }, 10000)
 })
 
 describe('delete', () => {
@@ -110,5 +135,30 @@ describe('delete', () => {
 
     mongooseFtpsServers = await FtpsServer.getFtpsServers()
     expect(mongooseFtpsServers.length).toEqual(0)
+  }, 10000)
+
+  it('should create a ftps server, delete it and unlink it to the account', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      ftpsServers: []
+    }
+
+    const mongooseAccount = await Account.createAccount(mockAccount)
+
+    const mockFtpsServer = {
+      host: 'myTestHost',
+      port: 21,
+      user: 'myTestUser',
+      password: 'myTestPassword',
+      certificate_path: 'myTestPath',
+      account: mongooseAccount._id
+    }
+
+    await FtpsServer.createFtpsServer(mockFtpsServer)
+    expect(mongooseAccount.ftpsServers.length).toEqual(1)
+
+    await FtpsServer.deleteFtpsServers()
+    expect(mongooseAccount.ftpsServers.length).toEqual(0)
   }, 10000)
 })
