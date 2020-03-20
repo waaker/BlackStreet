@@ -13,3 +13,8 @@ server_test:
     - npm install
   script:
     - npm test
+  except:
+    changes:
+      - ".gitlab-ci.yml"
+      - "README.md"
+      - "server/docs/*"
