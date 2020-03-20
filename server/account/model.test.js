@@ -50,3 +50,23 @@ describe('insert', () => {
     expect(bcrypt.compareSync(mockAccount.password, mongooseAccounts[0].hash)).toBe(true)
   }, 10000)
 })
+
+describe('delete', () => {
+  it('should create an account and delete it', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      ftpsServers: []
+    }
+
+    await Account.createAccount(mockAccount)
+    let mongooseAccounts = await Account.getAccounts()
+    expect(mongooseAccounts.length).toEqual(1)
+
+    const mongooseDeletedAccounts = await Account.deleteAccounts()
+    expect(mongooseDeletedAccounts.deletedCount).toEqual(1)
+
+    mongooseAccounts = await Account.getAccounts()
+    expect(mongooseAccounts.length).toEqual(0)
+  }, 10000)
+})
