@@ -24,6 +24,10 @@ const AccountSchema = new Schema({
 AccountSchema.methods = {
   generateHash: async function (password) {
     this.hash = await bcrypt.hash(password, 10)
+  },
+  addFtpsServer: async function (ftpsServer) {
+    await this.ftpsServers.push(ftpsServer._id)
+    await this.save()
   }
 }
 

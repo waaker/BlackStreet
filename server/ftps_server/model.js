@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { ObjectId } = Schema.Types
+const { model: Account } = require('../account')
 
 const FtpsServerSchema = new Schema({
   host: {
@@ -36,6 +37,8 @@ FtpsServerSchema.statics = {
   },
   createFtpsServer: async function (f) {
     const ftpsServer = await this.create(f)
+    const account = await Account.findById(ftpsServer.account._id)
+    await account.addFtpsServer(ftpsServer)
     return ftpsServer
   },
   deleteFtpsServers: async function () {
