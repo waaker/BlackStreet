@@ -19,7 +19,6 @@ afterAll(async () => {
 
 describe('insert', () => {
   afterEach(async () => {
-    await FtpsServer.deleteFtpsServers()
     await Account.deleteAccounts()
   })
 
@@ -138,7 +137,6 @@ describe('insert', () => {
 
 describe('delete', () => {
   afterEach(async () => {
-    await FtpsServer.deleteFtpsServers()
     await Account.deleteAccounts()
   })
 
