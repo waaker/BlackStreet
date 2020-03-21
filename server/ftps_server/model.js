@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { ObjectId } = Schema.Types
-const { model: Account } = require('../account')
 
 const FtpsServerSchema = new Schema({
   host: {
@@ -37,14 +36,14 @@ FtpsServerSchema.statics = {
   },
   createFtpsServer: async function (f) {
     const ftpsServer = await this.create(f)
-    const account = await Account.findById(ftpsServer.account)
+    const account = await mongoose.model('Account').findById(ftpsServer.account)
     await account.addFtpsServer(ftpsServer)
     return ftpsServer
   },
   deleteFtpsServers: async function () {
     let ftpsServers = await this.find()
     for (let i = 0; i < ftpsServers.length; i++) {
-      const account = await Account.findById(ftpsServers[i].account)
+      const account = await mongoose.model('Account').findById(ftpsServers[i].account)
       await account.deleteFtpsServer(ftpsServers[i])
     }
     ftpsServers = await this.deleteMany({})
@@ -56,7 +55,7 @@ FtpsServerSchema.statics = {
   },
   deleteFtpsServer: async function (id) {
     const ftpsServer = await this.findByIdAndDelete(id)
-    const account = await Account.findById(ftpsServer.account)
+    const account = await mongoose.model('Account').findById(ftpsServer.account)
     await account.deleteFtpsServer(ftpsServer)
     return ftpsServer
   }
