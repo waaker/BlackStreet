@@ -30,4 +30,23 @@ router
     }
   })
 
+router
+  .route('/:serverId')
+  .get(async function (req, res, next) {
+    try {
+      const ftpsServer = await FtpsServer.getFtpsServer(req.params.serverId)
+      res.status(200).json(ftpsServer)
+    } catch (e) {
+      res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
+    }
+  })
+  .delete(async function (req, res, next) {
+    try {
+      const ftpsServer = await FtpsServer.deleteFtpsServer(req.params.serverId)
+      res.status(200).json(ftpsServer)
+    } catch (e) {
+      res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
+    }
+  })
+
 module.exports = router

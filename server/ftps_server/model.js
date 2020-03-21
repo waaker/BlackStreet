@@ -49,6 +49,16 @@ FtpsServerSchema.statics = {
     }
     ftpsServers = await this.deleteMany({})
     return ftpsServers
+  },
+  getFtpsServer: async function (id) {
+    const ftpsServer = await this.findById(id)
+    return ftpsServer
+  },
+  deleteFtpsServer: async function (id) {
+    const ftpsServer = await this.findByIdAndDelete(id)
+    const account = await Account.findById(ftpsServer.account)
+    await account.deleteFtpsServer(ftpsServer)
+    return ftpsServer
   }
 }
 
