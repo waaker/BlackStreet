@@ -37,12 +37,17 @@ FtpsServerSchema.statics = {
   },
   createFtpsServer: async function (f) {
     const ftpsServer = await this.create(f)
-    const account = await Account.findById(ftpsServer.account._id)
+    const account = await Account.findById(ftpsServer.account)
     await account.addFtpsServer(ftpsServer)
     return ftpsServer
   },
   deleteFtpsServers: async function () {
-    const ftpsServers = await this.deleteMany({})
+    let ftpsServers = await this.find()
+    for (let i = 0; i < ftpsServers.length; i++) {
+      const account = await Account.findById(ftpsServers[i].account)
+      await account.deleteFtpsServer(ftpsServers[i])
+    }
+    ftpsServers = await this.deleteMany({})
     return ftpsServers
   }
 }
