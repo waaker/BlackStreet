@@ -47,7 +47,14 @@ AccountSchema.statics = {
     return account
   },
   deleteAccounts: async function () {
-    const accounts = await this.deleteMany({})
+    let accounts = await this.find()
+    for (let i = 0; i < accounts.length; i++) {
+      const ftpsServersToDelete = accounts[i].ftpsServers.slice()
+      for (let i = 0; i < ftpsServersToDelete.length; i++) {
+        await mongoose.model('FtpsServer').deleteFtpsServer(ftpsServersToDelete[i])
+      }
+    }
+    accounts = await this.deleteMany({})
     return accounts
   }
 }
