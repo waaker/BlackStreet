@@ -44,7 +44,7 @@ FtpsServerSchema.statics = {
     let ftpsServers = await this.find()
     for (let i = 0; i < ftpsServers.length; i++) {
       const account = await mongoose.model('Account').findById(ftpsServers[i].account)
-      await account.deleteFtpsServer(ftpsServers[i])
+      await account.removeFtpsServer(ftpsServers[i])
     }
     ftpsServers = await this.deleteMany({})
     return ftpsServers
@@ -56,7 +56,7 @@ FtpsServerSchema.statics = {
   deleteFtpsServer: async function (id) {
     const ftpsServer = await this.findByIdAndDelete(id)
     const account = await mongoose.model('Account').findById(ftpsServer.account)
-    await account.deleteFtpsServer(ftpsServer)
+    await account.removeFtpsServer(ftpsServer)
     return ftpsServer
   }
 }

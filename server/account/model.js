@@ -29,7 +29,7 @@ AccountSchema.methods = {
     await this.ftpsServers.push(ftpsServer._id)
     await this.save()
   },
-  deleteFtpsServer: async function (ftpsServer) {
+  removeFtpsServer: async function (ftpsServer) {
     await this.ftpsServers.splice(this.ftpsServers.indexOf(ftpsServer._id), 1)
     await this.save()
   }
