@@ -1,13 +1,10 @@
-image: node:alpine
-
-services:
-  - mongo
-  - jlesage/firefox
-
 stages:
   - test
 
 backend_test:
+  image: node:alpine
+  services:
+    - mongo
   stage: test
   before_script:
     - cd backend
@@ -23,6 +20,7 @@ backend_test:
     - backend
 
 frontend_test:
+  image: flat/firefox-stable
   stage: test
   before_script:
     - cd frontend
