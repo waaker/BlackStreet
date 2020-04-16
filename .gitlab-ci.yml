@@ -2,6 +2,7 @@ image: node:alpine
 
 services:
   - mongo
+  - jlesage/firefox
 
 stages:
   - test
@@ -20,3 +21,18 @@ backend_test:
   only:
     - develop
     - backend
+
+frontend_test:
+  stage: test
+  before_script:
+    - cd frontend
+    - npm install
+  script:
+    - npm test
+  except:
+    changes:
+      - "README.md"
+      - "frontend/README.md"
+  only:
+    - develop
+    - frontend
