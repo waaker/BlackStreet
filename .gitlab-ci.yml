@@ -15,10 +15,8 @@ backend_test:
     - npm test
   except:
     changes:
-      - ".gitlab-ci.yml"
       - "README.md"
       - "backend/docs/*"
   only:
-    refs:
-      - develop
-      - backend
+    - develop
+    - backend
