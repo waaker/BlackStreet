@@ -9,7 +9,7 @@ stages:
 server_test:
   stage: test
   before_script:
-    - cd server
+    - cd backend
     - npm install
   script:
     - npm test
@@ -17,4 +17,4 @@ server_test:
     changes:
       - ".gitlab-ci.yml"
       - "README.md"
-      - "server/docs/*"
+      - "backend/docs/*"
