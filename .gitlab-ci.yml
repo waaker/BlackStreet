@@ -6,7 +6,7 @@ services:
 stages:
   - test
 
-server_test:
+backend_test:
   stage: test
   before_script:
     - cd backend
@@ -18,3 +18,7 @@ server_test:
       - ".gitlab-ci.yml"
       - "README.md"
       - "backend/docs/*"
+  only:
+    refs:
+      - develop
+      - backend
