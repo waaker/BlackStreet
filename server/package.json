@@ -4,7 +4,8 @@
   "description": "FTPS Management - server part",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --runInBand"
+    "test": "NODE_ENV=test jest --runInBand",
+    "test_and_coverage": "NODE_ENV=test jest --runInBand --collectCoverage"
   },
   "standard": {
     "env": [
