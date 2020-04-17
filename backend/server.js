@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const config = require('config')
 const bodyParser = require('body-parser')
 
-const routes = require('./routes')
+const routes = require('./src/routes')
 
 const app = express()
 
