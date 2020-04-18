@@ -25,6 +25,9 @@ AccountSchema.methods = {
   generateHash: async function (password) {
     this.hash = await bcrypt.hash(password, 10)
   },
+  validatePassword: async function (password) {
+    return bcrypt.compare(password, this.hash)
+  },
   addFtpsServer: async function (ftpsServer) {
     await this.ftpsServers.push(ftpsServer._id)
     await this.save()
