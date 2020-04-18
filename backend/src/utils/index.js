@@ -1,3 +1,7 @@
-const ftps = require('./ftps')
+const auth = require('./auth')
+// const ftps = require('./ftps')
 
-module.exports = ftps
+module.exports = {
+  auth
+//   ftps
+}
