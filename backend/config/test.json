@@ -1,7 +1,6 @@
 {
     "Database": {
         "uri": "mongo",
-        "port": 27017,
         "name": "ci_db"
     }
 }
