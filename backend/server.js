@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const MongoStore = require('connect-mongo')(session)
 const config = require('config')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const passport = require('passport')
 
 const routes = require('./src/routes')
@@ -24,6 +25,8 @@ mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database
 
   app.use(passport.initialize())
   app.use(passport.session())
+
+  app.use(cors())
 
   app.use(bodyParser.json())
   app.use('/', routes)
