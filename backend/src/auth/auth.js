@@ -9,11 +9,11 @@ passport.use('login', new LocalStrategy({
   try {
     const account = await Account.findOne({ accountName })
     if (!account) {
-      return done({ status: 'Incorrect username or password.' }, false)
+      return done('Incorrect username or password.', false)
     }
     const validate = await account.validatePassword(password)
     if (!validate) {
-      return done({ status: 'Incorrect username or password.' }, false)
+      return done('Incorrect username or password.', false)
     }
     return done(null, account)
   } catch (error) {
