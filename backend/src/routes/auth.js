@@ -7,7 +7,12 @@ const router = express.Router()
 router
   .route('/login')
   .post(utils.auth.login(), async function (req, res, next) {
-    res.status(200).json('Authentication successful')
+    const payload = {
+      message: 'Authentication successful',
+      id: req.user._id,
+      accountName: req.user.accountName
+    }
+    res.status(200).json(payload)
   })
 
 router
