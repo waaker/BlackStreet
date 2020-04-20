@@ -18,7 +18,7 @@ export class AppComponent {
         this.authService.unsetSession(response), (e) => {
           console.error(e);
         },
-      () => this.router.navigateByUrl('/')
+      () => this.router.navigateByUrl('/login')
     );
   }
 }
