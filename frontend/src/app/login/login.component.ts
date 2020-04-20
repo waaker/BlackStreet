@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.loginError = false;
     this.authService.login(this.accountName.value, this.password.value).subscribe(
       response =>
-        console.log(response), (e) => {
+        this.authService.setSession(response), (e) => {
           this.loginError = true;
           console.error(e);
         },
