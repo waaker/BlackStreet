@@ -12,16 +12,17 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  private loginForm: FormGroup;
+  private accountName = new FormControl('', [Validators.required]);
+  private password = new FormControl('', [Validators.required]);
+  private loginError = false;
+  private hide = true;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    public authService: AuthService
-  ) { }
-  loginForm: FormGroup;
-  accountName = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
-  loginError = false;
-  hide = true;
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({});

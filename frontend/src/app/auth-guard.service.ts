@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
     private authService: AuthService,
     ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const requiresAdmin = route.data.requiresAdmin || false;
     const requiresLogin = route.data.requiresLogin || false;
     const requiresLogout = route.data.requiresLogout || false;

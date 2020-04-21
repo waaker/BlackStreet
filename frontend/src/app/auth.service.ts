@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,13 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  loginRequest(accountName: string, password: string) {
+  loginRequest(accountName: string, password: string): Observable<object> {
     const url = `${this.authUrl}/login`;
     return this.http.post(url, {accountName, password});
   }
 
-  setSession(payload) {
+  setSession(response: object) {
+    const payload = JSON.parse(JSON.stringify(response));
     delete payload.message;
     localStorage.setItem('session', JSON.stringify(payload));
     this.loggedIn = true;
@@ -32,7 +34,7 @@ export class AuthService {
     return this.http.post(url, { accountInfo }).toPromise();
   }
 
-  setRole(response) {
+  setRole(response: object) {
     this.admin = JSON.parse(JSON.stringify(response)).isAdmin;
   }
 
@@ -49,19 +51,19 @@ export class AuthService {
     return this.admin;
   }
 
-  logoutRequest() {
+  logoutRequest(): Observable<HttpResponse<object>> {
     const url = `${this.authUrl}/logout`;
     return this.http.post(url, {}, { observe: 'response' });
   }
 
-  unsetSession(response) {
+  unsetSession(response: HttpResponse<object>) {
     if (response.status === 200) {
       this.loggedIn = false;
       localStorage.removeItem('session');
     }
   }
 
-  unsetRole(response) {
+  unsetRole(response: HttpResponse<object>) {
     if (response.status === 200) {
       this.admin = false;
     }
