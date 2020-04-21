@@ -14,11 +14,13 @@ export class AppComponent {
 
   logout() {
     this.authService.logout().subscribe(
-      response =>
-        this.authService.unsetSession(response), (e) => {
-          console.error(e);
-        },
-      () => this.router.navigateByUrl('/login')
+      (response) => {
+        this.authService.unsetSession(response);
+      }, (e) => {
+        console.error(e);
+      }, () => {
+        this.router.navigateByUrl('/login');
+      }
     );
   }
 }

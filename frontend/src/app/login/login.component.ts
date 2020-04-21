@@ -32,12 +32,14 @@ export class LoginComponent implements OnInit {
   onSubmitForm() {
     this.loginError = false;
     this.authService.login(this.accountName.value, this.password.value).subscribe(
-      response =>
-        this.authService.setSession(response), (e) => {
-          this.loginError = true;
-          console.error(e);
-        },
-      () => this.router.navigateByUrl('/dashboard')
+      (response) => {
+        this.authService.setSession(response);
+      }, (e) => {
+        this.loginError = true;
+        console.error(e);
+      }, () => {
+        this.router.navigateByUrl('/dashboard');
+      }
     );
   }
 }
