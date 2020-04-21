@@ -31,9 +31,17 @@ export class LoginComponent implements OnInit {
 
   onSubmitForm() {
     this.loginError = false;
-    this.authService.login(this.accountName.value, this.password.value).subscribe(
-      (response) => {
-        this.authService.setSession(response);
+    this.authService.loginRequest(this.accountName.value, this.password.value).subscribe(
+      (loginResponse) => {
+        this.authService.setSession(loginResponse);
+        this.authService.checkRoleRequest().then(
+          (checkRoleResponse) => {
+            this.authService.setRole(checkRoleResponse);
+          },
+          (error) => {
+            this.authService.setRole(error);
+          }
+        );
       }, (e) => {
         this.loginError = true;
         console.error(e);

@@ -13,9 +13,10 @@ export class AppComponent {
   constructor(private router: Router, public authService: AuthService) { }
 
   logout() {
-    this.authService.logout().subscribe(
+    this.authService.logoutRequest().subscribe(
       (response) => {
         this.authService.unsetSession(response);
+        this.authService.unsetRole(response);
       }, (e) => {
         console.error(e);
       }, () => {

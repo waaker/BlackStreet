@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -14,10 +13,15 @@ export class AuthGuardService implements CanActivate {
     private authService: AuthService,
     ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const requiresAdmin = route.data.requiresAdmin || false;
     const requiresLogin = route.data.requiresLogin || false;
     const requiresLogout = route.data.requiresLogout || false;
-    if (requiresLogin) {
+    if (requiresAdmin) {
+      if (!this.authService.isAdmin()) {
+        this.router.navigateByUrl('/not-found');
+      }
+    } else if (requiresLogin) {
       if (!this.authService.isLoggedIn()) {
         this.router.navigateByUrl('/login');
       }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -8,13 +8,14 @@ import { environment } from '../environments/environment';
 export class AuthService {
 
   private authUrl = `${environment.baseUrl}/auth`;
-  private loggedIn: boolean;
+  private loggedIn = false;
+  private admin = false;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  login(accountName: string, password: string) {
+  loginRequest(accountName: string, password: string) {
     const url = `${this.authUrl}/login`;
     return this.http.post(url, {accountName, password});
   }
@@ -23,6 +24,16 @@ export class AuthService {
     delete payload.message;
     localStorage.setItem('session', JSON.stringify(payload));
     this.loggedIn = true;
+  }
+
+  checkRoleRequest(): Promise<object> {
+    const url = `${this.authUrl}/isAdmin`;
+    const accountInfo = localStorage.getItem('session');
+    return this.http.post(url, { accountInfo }).toPromise();
+  }
+
+  setRole(response) {
+    this.admin = JSON.parse(JSON.stringify(response)).isAdmin;
   }
 
   isLoggedIn(): boolean {
@@ -34,7 +45,11 @@ export class AuthService {
     }
   }
 
-  logout() {
+  isAdmin() {
+    return this.admin;
+  }
+
+  logoutRequest() {
     const url = `${this.authUrl}/logout`;
     return this.http.post(url, {}, { observe: 'response' });
   }
@@ -43,6 +58,12 @@ export class AuthService {
     if (response.status === 200) {
       this.loggedIn = false;
       localStorage.removeItem('session');
+    }
+  }
+
+  unsetRole(response) {
+    if (response.status === 200) {
+      this.admin = false;
     }
   }
 }
