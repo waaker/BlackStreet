@@ -27,8 +27,16 @@ const logout = (req, res, next) => {
   return next()
 }
 
+const isAdmin = (req, res, next) => {
+  if (JSON.parse(req.body.accountInfo).accountName === 'admin') {
+    return next()
+  }
+  return res.status(403).json({ isAdmin: false })
+}
+
 module.exports = {
   login,
   isLoggedIn,
-  logout
+  logout,
+  isAdmin
 }
