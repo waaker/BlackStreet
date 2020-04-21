@@ -16,13 +16,15 @@ import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
