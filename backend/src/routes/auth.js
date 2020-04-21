@@ -21,4 +21,10 @@ router
     res.status(200).json('Unauthentication successful')
   })
 
+router
+  .route('/isAdmin')
+  .post(utils.auth.isAdmin, async function (req, res, next) {
+    res.status(200).json({ isAdmin: true })
+  })
+
 module.exports = router
