@@ -9,8 +9,7 @@ router
   .post(utils.auth.login(), async function (req, res, next) {
     const payload = {
       message: 'Authentication successful',
-      id: req.user._id,
-      accountName: req.user.accountName
+      id: req.user._id
     }
     res.status(200).json(payload)
   })
