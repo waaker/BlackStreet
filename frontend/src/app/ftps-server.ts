@@ -7,5 +7,6 @@ export interface FtpsServer {
     user: string;
     password: string;
     certificate_path?: string;
-    account: Account;
+    account: number;
+    connected: boolean; // To replace with a connectionClient
 }
