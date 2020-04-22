@@ -1,0 +1,53 @@
+.my-component-body {
+    margin: 0px 30px;
+}
+
+mat-tab-group {
+    margin-top: 10px;
+}
+
+.my-mat-tab-body {
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
+}
+
+mat-list {
+    margin: 20px 5%;
+}
+
+.my-mat-line {
+    display: flex;
+    align-items: center;
+}
+
+.server-host {
+    font-weight: bold;
+}
+
+.server-status {
+    font-style: italic;
+    margin-left: 50px;
+}
+
+.server-button {
+    margin-left: auto;
+}
+
+mat-expansion-panel {
+    margin: 40px 5%;
+    align-self: flex-start;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-action-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5px 0px;
+    border-top: 0;
+}

@@ -1,3 +1,64 @@
-<p>
-  dashboard works!
-</p>
+<div class="my-component-body" *ngIf="account">
+  <h1>
+    FTPS Servers
+  </h1>
+  <mat-tab-group>
+    <mat-tab label="My servers">
+      <div class="my-mat-tab-body">
+        <mat-list>
+          <mat-list-item *ngFor="let server of ftpsServers">
+            <mat-icon mat-list-icon [color]="server.connected ? 'accent' : 'warn'">{{ server.connected ? "check_circle" : "cancel" }}</mat-icon>
+            <div mat-line>
+              <div class="my-mat-line">
+                <span class="server-host">{{ server.host }}</span>
+                <div class="server-status">{{ server.connected ? "Connected" : "Disconnected" }}</div>
+                <button mat-flat-button [color]="server.connected ? 'warn' : 'accent'" class="server-button">{{ server.connected ? "Stop" : "Connect" }}</button>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>New server</mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="newServerForm" (ngSubmit)="onSubmitForm()" class="form-field-container">
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Host</mat-label>
+              <input matInput class="form-control" formControlName="newServerHost">
+              <mat-error *ngIf="newServerHost.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Port</mat-label>
+              <input matInput class="form-control" formControlName="newServerPort">
+              <mat-error *ngIf="newServerHost.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>User</mat-label>
+              <input matInput class="form-control" formControlName="newServerUser">
+              <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Password</mat-label>
+              <input matInput class="form-control" formControlName="newServerUser" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Certificate path</mat-label>
+              <input matInput class="form-control" formControlName="newServerCertificatePath">
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button color="warn" (click)="this.newServerForm.reset()">Clear</button>
+              <button mat-flat-button color="primary" type="submit">Submit</button>
+            </mat-action-row>
+          </form>
+          
+        </mat-expansion-panel>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Transfer">
+    </mat-tab>
+  </mat-tab-group>
+</div>
