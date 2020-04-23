@@ -55,6 +55,14 @@ router
   .get(utils.ftps.connect, async function (req, res, next) {})
 
 router
+  .route('/:serverId/isConnected')
+  .get(utils.ftps.isConnected, async function (req, res, next) {})
+
+router
+  .route('/:serverId/disconnect')
+  .get(utils.ftps.disconnect, async function (req, res, next) {})
+
+router
   .route('/:serverId/list')
   .post(utils.ftps.list, async function (req, res, next) {})
 

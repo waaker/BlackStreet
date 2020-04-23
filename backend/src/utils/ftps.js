@@ -26,15 +26,37 @@ const connect = async (req, res, next) => {
     if (err) {
       res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
     }
-    res.status(200).send(status)
+    res.status(200).send({ status: status })
   })
+}
 
-  return next
+const isConnected = (req, res, next) => {
+  if (ftpsClients.has(req.params.serverId)) {
+    return res.status(200).json({ isConnected: true })
+  } else {
+    return res.status(200).json({ isConnected: false })
+  }
+}
+
+const disconnect = (req, res, next) => {
+  try {
+    console.log('a')
+    ftpsClients.get(req.params.serverId).end()
+    console.log('b')
+    ftpsClients.delete(req.params.serverId)
+    res.status(200).json('Disconnection successful')
+  } catch (err) {
+    console.log('c')
+    res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+  }
+  return next()
 }
 
 const list = async (req, res, next) => {
   ftpsClients.get(req.params.serverId).list(req.body.path, function (err, list) {
-    if (err) throw err
+    if (err) {
+      res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+    }
     res.status(200).send(list)
   })
   return next()
@@ -42,5 +64,7 @@ const list = async (req, res, next) => {
 
 module.exports = {
   connect,
+  isConnected,
+  disconnect,
   list
 }
