@@ -1,18 +1,46 @@
 const Client = require('ftp')
-const config = require('config')
 const fs = require('fs')
 
-const ftpsClient = new Client()
+const { model: FtpsServer } = require('../ftps_server')
 
-ftpsClient.connect({
-  host: config.get('Server_1.host'),
-  port: config.get('Server_1.port'),
-  user: config.get('Server_1.user'),
-  password: config.get('Server_1.password'),
-  secure: true,
-  secureOptions: {
-    ca: [fs.readFileSync(config.get('Server_1.certificate_path'))]
-  }
-})
+var ftpsClients = new Map()
 
-module.exports = ftpsClient
+const connect = async (req, res, next) => {
+  const ftpsServer = await FtpsServer.getFtpsServer(req.params.serverId)
+  const ftpsClient = new Client()
+
+  ftpsClient.connect({
+    host: ftpsServer.host,
+    port: ftpsServer.port,
+    user: ftpsServer.user,
+    password: ftpsServer.password,
+    secure: true,
+    secureOptions: {
+      ca: [fs.readFileSync(ftpsServer.certificate_path)]
+    }
+  })
+
+  ftpsClients.set(req.params.serverId, ftpsClient)
+
+  ftpsClient.status(function (err, status) {
+    if (err) {
+      res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+    }
+    res.status(200).send(status)
+  })
+
+  return next
+}
+
+const list = async (req, res, next) => {
+  ftpsClients.get(req.params.serverId).list(req.body.path, function (err, list) {
+    if (err) throw err
+    res.status(200).send(list)
+  })
+  return next()
+}
+
+module.exports = {
+  connect,
+  list
+}

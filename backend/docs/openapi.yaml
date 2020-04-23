@@ -185,26 +185,79 @@ paths:
         500:
           description: internal server error
           content: {}
-  /auth/login:
+  /ftps_server/{serverId}/connect:
+    get:
+      tags:
+      - ftps_server
+      summary: Initiate connection to the FTPS server
+      operationId: "connect"
+      parameters:
+      - name: serverId
+        in: path
+        description: Server ID
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /ftps_server/{serverId}/list:
     post:
       tags:
-      - auth
-      summary: Login
-      operationId: ""
+      - ftps_server
+      summary: List files on the FTPS Server
+      operationId: "list"
+      parameters:
+      - name: serverId
+        in: path
+        description: Server ID
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           multipart/form-data:
             schema:
               required:
-              - accountHash
+              - path
+              properties:
+                path:
+                  type: string
+                  description: path to list
+        required: true
+      responses:
+        200:
+          description: succesful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: Login
+      operationId: "login"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
               - accountName
+              - password
               properties:
                 accountName:
                   type: string
                   description: account name
-                accountHash:
+                password:
                   type: string
-                  description: account hashed password
+                  description: account password
         required: true
       responses:
         200:
@@ -218,7 +271,7 @@ paths:
       tags:
       - auth
       summary: Logout
-      operationId: ""
+      operationId: "logout"
       requestBody:
         description: ID of the account to logout
         content:
@@ -234,6 +287,28 @@ paths:
           description: internal server error
           content: {}
       x-codegen-request-body-name: accountId
+  /auth/isAdmin:
+    post:
+      tags:
+      - auth
+      summary: Check whether the user is admin or not
+      operationId: "isAdmin"
+      requestBody:
+        description: ID of the account
+        content:
+          '*/*':
+            schema:
+              type: string
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+      x-codegen-request-body-name: accountId
+      
 components:
   schemas:
     Account:
