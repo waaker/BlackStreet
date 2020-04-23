@@ -28,7 +28,7 @@ const logout = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (JSON.parse(req.body.accountInfo).accountName === 'admin') {
+  if (true) { // TODO Implement real admin check
     return next()
   }
   return res.status(403).json({ isAdmin: false })

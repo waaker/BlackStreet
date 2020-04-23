@@ -1,5 +1,6 @@
 const express = require('express')
 const { model: FtpsServer } = require('../ftps_server')
+const utils = require('../utils')
 
 const router = express.Router()
 
@@ -48,5 +49,13 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
+
+router
+  .route('/:serverId/connect')
+  .get(utils.ftps.connect, async function (req, res, next) {})
+
+router
+  .route('/:serverId/list')
+  .post(utils.ftps.list, async function (req, res, next) {})
 
 module.exports = router
