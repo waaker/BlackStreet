@@ -20,4 +20,19 @@ export class FtpsServerService {
       const url = `${this.ftpsServerUrl}/${id}`;
       return this.http.get<FtpsServer>(url);
     }
+
+    connect(id: number): Observable<object> {
+      const url = `${this.ftpsServerUrl}/${id}/connect`;
+      return this.http.get(url);
+    }
+
+    isConnected(id: number): Observable<object> {
+      const url = `${this.ftpsServerUrl}/${id}/isConnected`;
+      return this.http.get(url);
+    }
+
+    disconnect(id: number): Observable<object> {
+      const url = `${this.ftpsServerUrl}/${id}/disconnect`;
+      return this.http.get(url);
+    }
 }

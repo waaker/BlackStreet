@@ -57,6 +57,40 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  toggleConnect(ftpsServer: FtpsServer) {
+    if (!ftpsServer.connected) {
+      this.connect(ftpsServer);
+    } else {
+      this.disconnect(ftpsServer);
+    }
+  }
+
+  connect(ftpsServer: FtpsServer) {
+    this.ftpsServerService.connect(ftpsServer._id).subscribe(
+      () => {
+        ftpsServer.connected = true;
+      }, (e: Error) => {
+        console.error(e);
+      }
+    );
+  }
+
+  disconnect(ftpsServer: FtpsServer) {
+    this.ftpsServerService.disconnect(ftpsServer._id).subscribe(
+      () => {
+        ftpsServer.connected = false;
+      }, () => {
+        this.ftpsServerService.isConnected(ftpsServer._id).subscribe(
+          (response) => {
+            ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
+          }, (err2: Error) => {
+            console.error(err2);
+          }
+        );
+      }
+    );
+  }
+
   onSubmitForm() {
     console.log('Not implemented yet');
   }

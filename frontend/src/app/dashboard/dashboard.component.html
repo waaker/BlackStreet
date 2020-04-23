@@ -12,7 +12,7 @@
               <div class="my-mat-line">
                 <span class="server-host">{{ server.host }}</span>
                 <div class="server-status">{{ server.connected ? "Connected" : "Disconnected" }}</div>
-                <button mat-flat-button [color]="server.connected ? 'warn' : 'accent'" class="server-button">{{ server.connected ? "Stop" : "Connect" }}</button>
+                <button mat-flat-button (click)="this.toggleConnect(server)" [color]="server.connected ? 'warn' : 'accent'" class="server-button">{{ server.connected ? "Stop" : "Connect" }}</button>
               </div>
             </div>
             <mat-divider></mat-divider>

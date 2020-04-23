@@ -40,13 +40,10 @@ const isConnected = (req, res, next) => {
 
 const disconnect = (req, res, next) => {
   try {
-    console.log('a')
     ftpsClients.get(req.params.serverId).end()
-    console.log('b')
     ftpsClients.delete(req.params.serverId)
     res.status(200).json('Disconnection successful')
   } catch (err) {
-    console.log('c')
     res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
   }
   return next()
