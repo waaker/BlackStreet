@@ -1,4 +1,5 @@
 <mat-toolbar role="heading" class="toolbar z-depth-4" color=primary>
+  <a mat-button routerLink="/dashboard" *ngIf="authService.isLoggedIn()">Dashboard</a>
   <a mat-button routerLink="/admin" *ngIf="authService.isAdmin()">Admin</a>
   <span class="fill-remaining-space"></span>
   <a mat-button routerLink="/login" *ngIf="!authService.isLoggedIn()">Login</a>
