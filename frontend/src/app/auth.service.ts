@@ -47,6 +47,10 @@ export class AuthService {
     }
   }
 
+  loggedInAccountID(): number {
+    return JSON.parse(localStorage.getItem('session')).id;
+  }
+
   isAdmin() {
     return this.admin;
   }

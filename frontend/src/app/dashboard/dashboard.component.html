@@ -22,7 +22,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title>New server</mat-panel-title>
           </mat-expansion-panel-header>
-          <form [formGroup]="newServerForm" (ngSubmit)="onSubmitForm()" class="form-field-container">
+          <form [formGroup]="newServerForm" (ngSubmit)="submitNewServerForm()" class="form-field-container">
             <mat-form-field class="form-group" color="accent">
               <mat-label>Host</mat-label>
               <input matInput class="form-control" formControlName="newServerHost">
@@ -40,20 +40,21 @@
             </mat-form-field>
             <mat-form-field class="form-group" color="accent">
               <mat-label>Password</mat-label>
-              <input matInput class="form-control" formControlName="newServerUser" [type]="hide ? 'password' : 'text'">
+              <input matInput class="form-control" formControlName="newServerPassword" [type]="hide ? 'password' : 'text'">
               <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
             </mat-form-field>
+            <mat-slide-toggle formControlName="newServerSecured" (change)="toggleSecured()">Secured</mat-slide-toggle>
             <mat-form-field class="form-group" color="accent">
               <mat-label>Certificate path</mat-label>
-              <input matInput class="form-control" formControlName="newServerCertificatePath">
+              <input matInput class="form-control" formControlName="newServerCertificatePath" matTooltip="Choose 'Secured' to add a X.509 certificate path." matTooltipPosition="right" [matTooltipDisabled]="newServerCertificatePath.enabled">
+              <mat-error *ngIf="newServerCertificatePath.invalid">You must enter a value</mat-error>
             </mat-form-field>
             <mat-action-row>
               <button mat-flat-button color="warn" (click)="this.newServerForm.reset()">Clear</button>
               <button mat-flat-button color="primary" type="submit">Submit</button>
             </mat-action-row>
           </form>
-          
         </mat-expansion-panel>
       </div>
     </mat-tab>

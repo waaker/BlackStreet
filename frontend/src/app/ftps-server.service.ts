@@ -16,9 +16,13 @@ export class FtpsServerService {
     private http: HttpClient
     ) { }
 
-    getFtpsServer(id: number): Observable<FtpsServer> {
+    getFtpsServerRequest(id: number): Observable<FtpsServer> {
       const url = `${this.ftpsServerUrl}/${id}`;
       return this.http.get<FtpsServer>(url);
+    }
+
+    createFtpsServerRequest(ftpsServer: FtpsServer): Observable<FtpsServer> {
+      return this.http.post<FtpsServer>(this.ftpsServerUrl, ftpsServer);
     }
 
     connect(id: number): Observable<object> {

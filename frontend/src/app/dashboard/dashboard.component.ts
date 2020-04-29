@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AccountService } from '../account.service';
+import { AuthService } from '../auth.service';
 import { FtpsServerService } from '../ftps-server.service';
 
 import { Account } from '../account';
@@ -20,13 +22,16 @@ export class DashboardComponent implements OnInit {
   private newServerHost = new FormControl('', [Validators.required]);
   private newServerPort = new FormControl(21, [Validators.required]);
   private newServerUser = new FormControl('', [Validators.required]);
+  private newServerSecured = new FormControl({value: true});
   private newServerPassword = new FormControl('', [Validators.required]);
-  private newServerCertificatePath = new FormControl();
+  private newServerCertificatePath = new FormControl('', [Validators.required]);
   private hide = true;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
+    private authService: AuthService,
     private ftpsServerService: FtpsServerService
     ) { }
 
@@ -36,6 +41,7 @@ export class DashboardComponent implements OnInit {
     this.newServerForm.addControl('newServerPort', this.newServerPort);
     this.newServerForm.addControl('newServerUser', this.newServerUser);
     this.newServerForm.addControl('newServerPassword', this.newServerPassword);
+    this.newServerForm.addControl('newServerSecured', this.newServerSecured);
     this.newServerForm.addControl('newServerCertificatePath', this.newServerCertificatePath);
 
     this.accountService.getLoggedAccount().subscribe(
@@ -45,7 +51,7 @@ export class DashboardComponent implements OnInit {
         console.log(e);
       }, () => {
         this.account.ftpsServers.forEach(server => {
-          this.ftpsServerService.getFtpsServer(server).subscribe(
+          this.ftpsServerService.getFtpsServerRequest(server).subscribe(
             (response) => {
               this.ftpsServers.push(response);
             }, (e) => {
@@ -91,8 +97,26 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  onSubmitForm() {
-    console.log('Not implemented yet');
+  toggleSecured() {
+    this.newServerCertificatePath.enabled ? this.newServerCertificatePath.disable() : this.newServerCertificatePath.enable();
+  }
+
+  submitNewServerForm() {
+    const ftpsServer: FtpsServer = {
+      host: this.newServerHost.value,
+      port: this.newServerPort.value,
+      user: this.newServerUser.value,
+      password: this.newServerPassword.value,
+      account: this.authService.loggedInAccountID(),
+      certificate_path: this.newServerCertificatePath.value,
+    };
+    this.ftpsServerService.createFtpsServerRequest(ftpsServer).subscribe(
+      () => {
+        location.reload();
+      }, (e) => {
+        console.error(e);
+      }
+    );
   }
 
 }
