@@ -41,8 +41,9 @@ const logout = (req, res, next) => {
 const isAdmin = (req, res, next) => {
   if (true) { // TODO Implement real admin check
     res.status(200).json({ isAdmin: true })
+  } else {
+    res.status(403).json({ isAdmin: false })
   }
-  res.status(403).json({ isAdmin: false })
 }
 
 module.exports = {
