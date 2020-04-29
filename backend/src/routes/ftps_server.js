@@ -56,14 +56,16 @@ router
 
 router
   .route('/:serverId/isConnected')
-  .get(utils.ftps.isConnected, async function (req, res, next) {})
+  .get(utils.ftps.isConnected, async function (req, res, next) {
+    res.status(200).json({ isConnected: true })
+  })
 
 router
   .route('/:serverId/disconnect')
-  .get(utils.ftps.disconnect, async function (req, res, next) {})
+  .get(utils.ftps.isConnected, utils.ftps.disconnect, async function (req, res, next) {})
 
 router
   .route('/:serverId/list')
-  .post(utils.ftps.list, async function (req, res, next) {})
+  .post(utils.ftps.isConnected, utils.ftps.list, async function (req, res, next) {})
 
 module.exports = router
