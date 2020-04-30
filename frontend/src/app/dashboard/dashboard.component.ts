@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   private newServerHost = new FormControl('', [Validators.required]);
   private newServerPort = new FormControl(21, [Validators.required]);
   private newServerUser = new FormControl('', [Validators.required]);
-  private newServerSecured = new FormControl({value: true});
+  private newServerSecured = new FormControl({value: true, disabled: true});
   private newServerPassword = new FormControl('', [Validators.required]);
   private newServerCertificatePath = new FormControl('', [Validators.required]);
   private hide = true;

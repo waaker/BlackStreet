@@ -44,7 +44,7 @@
               <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
             </mat-form-field>
-            <mat-slide-toggle formControlName="newServerSecured" (change)="toggleSecured()">Secured</mat-slide-toggle>
+            <mat-slide-toggle formControlName="newServerSecured" (change)="toggleSecured()" matTooltip="Only secured connections are supported at the moment." matTooltipPosition="right">Secured</mat-slide-toggle>
             <mat-form-field class="form-group" color="accent">
               <mat-label>Certificate path</mat-label>
               <input matInput class="form-control" formControlName="newServerCertificatePath" matTooltip="Choose 'Secured' to add a X.509 certificate path." matTooltipPosition="right" [matTooltipDisabled]="newServerCertificatePath.enabled">
