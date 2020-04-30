@@ -26,7 +26,10 @@ mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database
   app.use(passport.initialize())
   app.use(passport.session())
 
-  app.use(cors())
+  app.use(cors({
+    origin: config.get('General.corsOrigin'),
+    credentials: true
+  }))
 
   app.use(bodyParser.json())
   app.use('/', routes)
