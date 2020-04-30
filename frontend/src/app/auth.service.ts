@@ -18,7 +18,7 @@ export class AuthService {
 
   loginRequest(accountName: string, password: string): Observable<object> {
     const url = `${this.authUrl}/login`;
-    return this.http.post(url, {accountName, password});
+    return this.http.post(url, {accountName, password}, { withCredentials: true });
   }
 
   setSession(response: object) {
@@ -57,7 +57,7 @@ export class AuthService {
 
   logoutRequest(): Observable<HttpResponse<object>> {
     const url = `${this.authUrl}/logout`;
-    return this.http.post(url, {}, { observe: 'response' });
+    return this.http.post(url, {}, { observe: 'response', withCredentials: true });
   }
 
   unsetSession(response: HttpResponse<object>) {
