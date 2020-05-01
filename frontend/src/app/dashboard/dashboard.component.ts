@@ -89,10 +89,20 @@ export class DashboardComponent implements OnInit {
         this.ftpsServerService.isConnected(ftpsServer._id).subscribe(
           (response) => {
             ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
-          }, (err2: Error) => {
-            console.error(err2);
+          }, (e: Error) => {
+            console.error(e);
           }
         );
+      }
+    );
+  }
+
+  deleteFtpsServer(ftpsServer: FtpsServer) {
+    this.ftpsServerService.deleteFtpsServerRequest(ftpsServer._id).subscribe(
+      () => {
+        location.reload();
+      }, (e) => {
+        console.error(e);
       }
     );
   }

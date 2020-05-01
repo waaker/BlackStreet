@@ -25,6 +25,11 @@ export class FtpsServerService {
       return this.http.post<FtpsServer>(this.ftpsServerUrl, ftpsServer);
     }
 
+    deleteFtpsServerRequest(id: number): Observable<FtpsServer> {
+      const url = `${this.ftpsServerUrl}/${id}`;
+      return this.http.delete<FtpsServer>(url);
+    }
+
     connect(id: number): Observable<object> {
       const url = `${this.ftpsServerUrl}/${id}/connect`;
       return this.http.get(url);

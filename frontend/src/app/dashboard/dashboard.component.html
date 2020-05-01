@@ -12,7 +12,9 @@
               <div class="my-mat-line">
                 <span class="server-host">{{ server.host }}</span>
                 <div class="server-status">{{ server.connected ? "Connected" : "Disconnected" }}</div>
+                <span class="fill-remaining-space"></span>
                 <button mat-flat-button (click)="this.toggleConnect(server)" [color]="server.connected ? 'warn' : 'accent'" class="server-button">{{ server.connected ? "Stop" : "Connect" }}</button>
+                <button mat-flat-button (click)="this.deleteFtpsServer(server)" color="warn">Delete</button>
               </div>
             </div>
             <mat-divider></mat-divider>

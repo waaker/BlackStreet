@@ -32,7 +32,7 @@ mat-list {
 }
 
 .server-button {
-    margin-left: auto;
+    margin: 0px 10px;
 }
 
 mat-expansion-panel {
