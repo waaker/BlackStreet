@@ -58,7 +58,8 @@ const disconnect = async (req, res, next) => {
 
 const list = async (req, res, next) => {
   try {
-    const list = await ftpsClients.get(req.params.serverId).list(req.body.path)
+    await ftpsClients.get(req.params.serverId).cd(req.body.path)
+    const list = await ftpsClients.get(req.params.serverId).list()
     res.status(200).send(list)
   } catch (err) {
     res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
