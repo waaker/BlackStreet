@@ -35,7 +35,12 @@ const connect = async (req, res, next) => {
 
 const isConnected = (req, res, next) => {
   if (ftpsClients.has(req.params.serverId)) {
-    return next()
+    if (!ftpsClients.get(req.params.serverId).closed) {
+      return next()
+    } else {
+      ftpsClients.delete(req.params.serverId)
+      return res.status(200).json({ isConnected: false })
+    }
   } else {
     return res.status(200).json({ isConnected: false })
   }
