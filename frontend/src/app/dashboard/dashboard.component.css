@@ -58,6 +58,12 @@ mat-action-row {
 
 .mat-row {
     height: 36px;
+    cursor: pointer;
+}
+
+.highlighted > td {
+    color: #424242; 
+    background-color: white;
 }
 
 .mat-cell {

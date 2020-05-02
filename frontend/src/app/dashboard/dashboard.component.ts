@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatSort) sort: MatSort;
   private columnsTransferTables: string[] = ['type', 'name', 'size', 'rawModifiedAt'];
+  private selectedEntry: string = null;
 
   constructor(
     private router: Router,
@@ -166,8 +167,13 @@ export class DashboardComponent implements OnInit {
     ftpsServer.entries.filter = filterValue.trim().toLowerCase();
   }
 
-  clickRow(ftpsServer: FtpsServer, type: number, path: string) {
+  clickRow(name: string) {
+    this.selectedEntry = (this.selectedEntry === name) ? null : name;
+  }
+
+  dblclickRow(ftpsServer: FtpsServer, type: number, path: string) {
     if (type === 2) {
+      this.selectedEntry = null;
       this.listEntries(ftpsServer, path);
     }
   }

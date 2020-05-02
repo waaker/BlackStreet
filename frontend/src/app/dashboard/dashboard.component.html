@@ -70,14 +70,14 @@
               <mat-label>Filter</mat-label>
               <input matInput (keyup)="applyFilter($event, server)" placeholder="">
             </mat-form-field>
-            <button mat-icon-button (click)="clickRow(server, 2, '..')">
+            <button mat-icon-button (click)="dblclickRow(server, 2, '..')">
               <mat-icon>
                 arrow_back
               </mat-icon>
             </button>
             <table mat-table [dataSource]="server.entries" matSort>
               <tr mat-header-row *matHeaderRowDef="columnsTransferTables"></tr>
-              <tr mat-row *matRowDef="let row; columns: columnsTransferTables;" (dblclick)="clickRow(server, row.type, row.name)"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsTransferTables;" (click)="clickRow(row.name)" (dblclick)="dblclickRow(server, row.type, row.name)" [class.highlighted]="selectedEntry === row.name"></tr>
               <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                 <td mat-cell *matCellDef="let element">
