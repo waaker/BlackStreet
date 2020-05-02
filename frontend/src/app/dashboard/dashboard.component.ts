@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTable, MatTableDataSource } from '@angular/material';
 import { MatSort } from '@angular/material/sort';
@@ -35,7 +34,6 @@ export class DashboardComponent implements OnInit {
   private selectedEntry: string = null;
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private authService: AuthService,
@@ -99,27 +97,6 @@ export class DashboardComponent implements OnInit {
     ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
   }
 
-  listEntries(ftpsServer: FtpsServer, path: string) {
-    ftpsServer.entries.data = [];
-    this.ftpsServerService.list(ftpsServer._id, path).subscribe(
-      (response: Entry[]) => {
-        response.forEach((entry: Entry) => {
-          ftpsServer.entries.data.push({
-            name: entry.name,
-            type: entry.type,
-            size: entry.size,
-            rawModifiedAt: entry.rawModifiedAt
-          });
-          ftpsServer.entries.sort = this.sort;
-        });
-        this.table.renderRows();
-      }, (e: Error) => {
-        console.error(e);
-        this.checkConnectionStatus(ftpsServer);
-      }
-    );
-  }
-
   disconnect(ftpsServer: FtpsServer) {
     this.ftpsServerService.disconnect(ftpsServer._id).subscribe(
       () => {
@@ -158,6 +135,27 @@ export class DashboardComponent implements OnInit {
         location.reload();
       }, (e) => {
         console.error(e);
+      }
+    );
+  }
+
+  listEntries(ftpsServer: FtpsServer, path: string) {
+    ftpsServer.entries.data = [];
+    this.ftpsServerService.list(ftpsServer._id, path).subscribe(
+      (response: Entry[]) => {
+        response.forEach((entry: Entry) => {
+          ftpsServer.entries.data.push({
+            name: entry.name,
+            type: entry.type,
+            size: entry.size,
+            rawModifiedAt: entry.rawModifiedAt
+          });
+          ftpsServer.entries.sort = this.sort;
+        });
+        this.table.renderRows();
+      }, (e: Error) => {
+        console.error(e);
+        this.checkConnectionStatus(ftpsServer);
       }
     );
   }
