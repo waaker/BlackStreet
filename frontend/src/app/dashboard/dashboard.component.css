@@ -3,17 +3,12 @@
 }
 
 mat-tab-group {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .my-mat-tab-body {
     display: flex;
     flex-direction: column;
-    /* flex-direction: row; */
-    /* flex-wrap: wrap; */
-}
-
-mat-list {
     margin: 20px 5%;
 }
 
@@ -36,7 +31,7 @@ mat-list {
 }
 
 mat-expansion-panel {
-    margin: 40px 5%;
+    margin-top: 40px;
     align-self: flex-start;
 }
 
@@ -50,4 +45,12 @@ mat-action-row {
     justify-content: space-between;
     padding: 20px 5px 0px;
     border-top: 0;
+}
+
+.mat-row {
+    height: 36px;
+}
+
+.mat-cell {
+    padding-right: 20px;
 }

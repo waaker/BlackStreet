@@ -1,12 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatTable, MatTableDataSource } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 import { AccountService } from '../account.service';
 import { AuthService } from '../auth.service';
 import { FtpsServerService } from '../ftps-server.service';
 
 import { Account } from '../account';
+import { Entry } from '../entry';
 import { FtpsServer } from '../ftps-server';
 
 @Component({
@@ -26,6 +29,9 @@ export class DashboardComponent implements OnInit {
   private newServerPassword = new FormControl('', [Validators.required]);
   private newServerCertificatePath = new FormControl('', [Validators.required]);
   private hide = true;
+  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatSort) sort: MatSort;
+  private columnsTransferTables: string[] = ['type', 'name', 'size', 'rawModifiedAt'];
 
   constructor(
     private router: Router,
@@ -50,10 +56,15 @@ export class DashboardComponent implements OnInit {
       }, (e) => {
         console.log(e);
       }, () => {
-        this.account.ftpsServers.forEach(server => {
-          this.ftpsServerService.getFtpsServerRequest(server).subscribe(
-            (response) => {
-              this.ftpsServers.push(response);
+        this.account.ftpsServers.forEach(serverId => {
+          this.ftpsServerService.getFtpsServerRequest(serverId).subscribe(
+            async (server) => {
+              await this.checkConnectionStatus(server);
+              server.entries = new MatTableDataSource([]);
+              this.ftpsServers.push(server);
+              if (server.connected) {
+                this.listEntries(server);
+              }
             }, (e) => {
               console.log(e);
             }
@@ -75,8 +86,34 @@ export class DashboardComponent implements OnInit {
     this.ftpsServerService.connect(ftpsServer._id).subscribe(
       () => {
         ftpsServer.connected = true;
+        this.listEntries(ftpsServer);
       }, (e: Error) => {
         console.error(e);
+      }
+    );
+  }
+
+  async checkConnectionStatus(ftpsServer: FtpsServer) {
+    const response = await this.ftpsServerService.isConnected(ftpsServer._id).toPromise();
+    ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
+  }
+
+  listEntries(ftpsServer: FtpsServer) {
+    this.ftpsServerService.list(ftpsServer._id).subscribe(
+      (response: Entry[]) => {
+        response.forEach((entry: Entry) => {
+          ftpsServer.entries.data.push({
+            name: entry.name,
+            type: entry.type,
+            size: entry.size,
+            rawModifiedAt: entry.rawModifiedAt
+          });
+          ftpsServer.entries.sort = this.sort;
+        });
+        this.table.renderRows();
+      }, (e: Error) => {
+        console.error(e);
+        this.checkConnectionStatus(ftpsServer);
       }
     );
   }
@@ -85,14 +122,9 @@ export class DashboardComponent implements OnInit {
     this.ftpsServerService.disconnect(ftpsServer._id).subscribe(
       () => {
         ftpsServer.connected = false;
+        ftpsServer.entries.data = [];
       }, () => {
-        this.ftpsServerService.isConnected(ftpsServer._id).subscribe(
-          (response) => {
-            ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
-          }, (e: Error) => {
-            console.error(e);
-          }
-        );
+        this.checkConnectionStatus(ftpsServer);
       }
     );
   }
@@ -127,6 +159,11 @@ export class DashboardComponent implements OnInit {
         console.error(e);
       }
     );
+  }
+
+  applyFilter(event: Event, ftpsServer: FtpsServer) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    ftpsServer.entries.filter = filterValue.trim().toLowerCase();
   }
 
 }

@@ -1,4 +1,5 @@
-import { Account } from './account';
+import { MatTableDataSource } from '@angular/material/table';
+import { Entry } from './entry';
 
 export interface FtpsServer {
     _id?: number;
@@ -9,4 +10,5 @@ export interface FtpsServer {
     certificate_path?: string;
     account: number;
     connected?: boolean;
+    entries?: MatTableDataSource<Entry>;
 }

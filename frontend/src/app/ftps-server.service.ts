@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
+import { Entry } from './entry';
 import { FtpsServer } from './ftps-server';
 
 @Injectable({
@@ -32,16 +33,21 @@ export class FtpsServerService {
 
     connect(id: number): Observable<object> {
       const url = `${this.ftpsServerUrl}/${id}/connect`;
-      return this.http.get(url);
+      return this.http.get<object>(url);
     }
 
     isConnected(id: number): Observable<object> {
       const url = `${this.ftpsServerUrl}/${id}/isConnected`;
-      return this.http.get(url);
+      return this.http.get<object>(url);
     }
 
     disconnect(id: number): Observable<object> {
       const url = `${this.ftpsServerUrl}/${id}/disconnect`;
-      return this.http.get(url);
+      return this.http.get<object>(url);
+    }
+
+    list(id: number, path: string = '/'): Observable<Entry[]> {
+      const url = `${this.ftpsServerUrl}/${id}/list`;
+      return this.http.post<Entry[]>(url, {path});
     }
 }
