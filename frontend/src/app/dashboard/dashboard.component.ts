@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
               server.entries = new MatTableDataSource([]);
               this.ftpsServers.push(server);
               if (server.connected) {
-                this.listEntries(server);
+                this.listEntries(server, '/');
               }
             }, (e) => {
               console.log(e);
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
     this.ftpsServerService.connect(ftpsServer._id).subscribe(
       () => {
         ftpsServer.connected = true;
-        this.listEntries(ftpsServer);
+        this.listEntries(ftpsServer, '/');
       }, (e: Error) => {
         console.error(e);
       }
@@ -98,8 +98,9 @@ export class DashboardComponent implements OnInit {
     ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
   }
 
-  listEntries(ftpsServer: FtpsServer) {
-    this.ftpsServerService.list(ftpsServer._id).subscribe(
+  listEntries(ftpsServer: FtpsServer, path: string) {
+    ftpsServer.entries.data = [];
+    this.ftpsServerService.list(ftpsServer._id, path).subscribe(
       (response: Entry[]) => {
         response.forEach((entry: Entry) => {
           ftpsServer.entries.data.push({
@@ -122,7 +123,6 @@ export class DashboardComponent implements OnInit {
     this.ftpsServerService.disconnect(ftpsServer._id).subscribe(
       () => {
         ftpsServer.connected = false;
-        ftpsServer.entries.data = [];
       }, () => {
         this.checkConnectionStatus(ftpsServer);
       }
@@ -164,6 +164,12 @@ export class DashboardComponent implements OnInit {
   applyFilter(event: Event, ftpsServer: FtpsServer) {
     const filterValue = (event.target as HTMLInputElement).value;
     ftpsServer.entries.filter = filterValue.trim().toLowerCase();
+  }
+
+  clickRow(ftpsServer: FtpsServer, type: number, path: string) {
+    if (type === 2) {
+      this.listEntries(ftpsServer, path);
+    }
   }
 
 }

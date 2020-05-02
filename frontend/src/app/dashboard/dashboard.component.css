@@ -47,6 +47,15 @@ mat-action-row {
     border-top: 0;
 }
 
+.my-server {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-filter {
+    width: min-content;
+}
+
 .mat-row {
     height: 36px;
 }
