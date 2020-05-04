@@ -14,6 +14,6 @@ router
 
 router
   .route('/isAdmin')
-  .post(utils.auth.isAdmin, async function (req, res, next) {})
+  .post(utils.auth.isLoggedIn, utils.auth.isAdmin, async function (req, res, next) {})
 
 module.exports = router

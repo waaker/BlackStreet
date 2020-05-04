@@ -26,16 +26,7 @@ export class AuthService {
     delete payload.message;
     localStorage.setItem('session', JSON.stringify(payload));
     this.loggedIn = true;
-  }
-
-  checkRoleRequest(): Promise<object> {
-    const url = `${this.authUrl}/isAdmin`;
-    const accountInfo = localStorage.getItem('session');
-    return this.http.post(url, { accountInfo }).toPromise();
-  }
-
-  setRole(response: object) {
-    this.admin = JSON.parse(JSON.stringify(response)).isAdmin;
+    this.checkAdmin();
   }
 
   isLoggedIn(): boolean {
@@ -55,6 +46,25 @@ export class AuthService {
     return this.admin;
   }
 
+  checkAdmin() {
+    this.isAdminRequest().subscribe(
+      (response) => {
+        console.log(response);
+        this.admin = true;
+      }, (e: Error) => {
+        console.error(e);
+        this.admin = false;
+      }
+    );
+  }
+
+  isAdminRequest(): Observable<object> {
+    console.log('e');
+    const url = `${this.authUrl}/isAdmin`;
+    const accountInfo = localStorage.getItem('session');
+    return this.http.post(url, { accountInfo }, { withCredentials: true });
+  }
+
   logoutRequest(): Observable<HttpResponse<object>> {
     const url = `${this.authUrl}/logout`;
     return this.http.post(url, {}, { observe: 'response', withCredentials: true });
@@ -64,12 +74,7 @@ export class AuthService {
     if (response.status === 200) {
       this.loggedIn = false;
       localStorage.removeItem('session');
-    }
-  }
-
-  unsetRole(response: HttpResponse<object>) {
-    if (response.status === 200) {
-      this.admin = false;
+      this.checkAdmin();
     }
   }
 }

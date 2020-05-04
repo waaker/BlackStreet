@@ -35,14 +35,6 @@ export class LoginComponent implements OnInit {
     this.authService.loginRequest(this.accountName.value, this.password.value).subscribe(
       (loginResponse) => {
         this.authService.setSession(loginResponse);
-        this.authService.checkRoleRequest().then(
-          (checkRoleResponse) => {
-            this.authService.setRole(checkRoleResponse);
-          },
-          (error) => {
-            this.authService.setRole(error);
-          }
-        );
       }, (e) => {
         this.loginError = true;
         console.error(e);
