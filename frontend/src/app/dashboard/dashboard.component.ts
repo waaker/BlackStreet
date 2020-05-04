@@ -93,8 +93,13 @@ export class DashboardComponent implements OnInit {
   }
 
   async checkConnectionStatus(ftpsServer: FtpsServer) {
-    const response = await this.ftpsServerService.isConnected(ftpsServer._id).toPromise();
-    ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
+    await this.ftpsServerService.isConnected(ftpsServer._id).toPromise().then(
+      (response: object) => {
+        ftpsServer.connected = JSON.parse(JSON.stringify(response)).isConnected;
+      }, (e: Error) => {
+        ftpsServer.connected = JSON.parse(JSON.stringify(e)).error.isConnected;
+      }
+    );
   }
 
   disconnect(ftpsServer: FtpsServer) {
