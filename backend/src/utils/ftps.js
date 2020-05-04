@@ -39,10 +39,10 @@ const isConnected = (req, res, next) => {
       return next()
     } else {
       ftpsClients.delete(req.params.serverId)
-      return res.status(200).json({ isConnected: false })
+      return res.status(500).json({ isConnected: false })
     }
   } else {
-    return res.status(200).json({ isConnected: false })
+    return res.status(500).json({ isConnected: false })
   }
 }
 
