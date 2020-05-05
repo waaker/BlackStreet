@@ -11,11 +11,7 @@ const login = () => {
             if (err) {
               throw err
             } else {
-              const payload = {
-                loggedIn: true,
-                id: req.user._id
-              }
-              res.status(200).json(payload)
+              res.status(200).json({ loggedIn: true })
             }
           })
         }
@@ -26,6 +22,11 @@ const login = () => {
   }
 }
 
+const logout = (req, res, next) => {
+  req.logout()
+  res.status(200).json({ loggedIn: false })
+}
+
 const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
@@ -33,14 +34,13 @@ const isLoggedIn = (req, res, next) => {
   return res.status(401).json({ isLoggedIn: false })
 }
 
-const logout = (req, res, next) => {
-  req.logout()
-  res.status(200).json({ loggedIn: false })
+const getLoggedAccount = (req, res, next) => {
+  res.status(200).json({ loggedAccount: req.user })
 }
 
 const isAdmin = (req, res, next) => {
   if (true) { // TODO Implement real admin check
-    res.status(200).json({ isAdmin: true })
+    next()
   } else {
     res.status(403).json({ isAdmin: false })
   }
@@ -48,7 +48,8 @@ const isAdmin = (req, res, next) => {
 
 module.exports = {
   login,
-  isLoggedIn,
   logout,
+  isLoggedIn,
+  getLoggedAccount,
   isAdmin
 }
