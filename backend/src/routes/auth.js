@@ -10,10 +10,22 @@ router
 
 router
   .route('/logout')
-  .post(utils.auth.logout, async function (req, res, next) {})
+  .post(utils.auth.isLoggedIn, utils.auth.logout, async function (req, res, next) {})
+
+router
+  .route('/isLoggedIn')
+  .get(utils.auth.isLoggedIn, async function (req, res, next) {
+    res.status(200).json({ isLoggedIn: true })
+  })
+
+router
+  .route('/loggedAccount')
+  .get(utils.auth.isLoggedIn, utils.auth.getLoggedAccount, async function (req, res, next) {})
 
 router
   .route('/isAdmin')
-  .post(utils.auth.isLoggedIn, utils.auth.isAdmin, async function (req, res, next) {})
+  .get(utils.auth.isLoggedIn, utils.auth.isAdmin, async function (req, res, next) {
+    res.status(200).json({ isAdmin: true })
+  })
 
 module.exports = router

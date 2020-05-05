@@ -206,6 +206,48 @@ paths:
         500:
           description: internal server error
           content: {}
+  /ftps_server/{serverId}/isConnected:
+    get:
+      tags:
+      - ftps_server
+      summary: Check if connection to the serve is still open 
+      operationId: "isConnected"
+      parameters:
+      - name: serverId
+        in: path
+        description: Server ID
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /ftps_server/{serverId}/disconnect:
+    get:
+      tags:
+      - ftps_server
+      summary: Close connection to the server
+      operationId: "disconnect"
+      parameters:
+      - name: serverId
+        in: path
+        description: Server ID
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
   /ftps_server/{serverId}/list:
     post:
       tags:
@@ -287,19 +329,12 @@ paths:
           description: internal server error
           content: {}
       x-codegen-request-body-name: accountId
-  /auth/isAdmin:
-    post:
+  /auth/isLoggedIn:
+    get:
       tags:
       - auth
-      summary: Check whether the user is admin or not
-      operationId: "isAdmin"
-      requestBody:
-        description: ID of the account
-        content:
-          '*/*':
-            schema:
-              type: string
-        required: true
+      summary: Check if user is logged in
+      operationId: "isLoggedIn"
       responses:
         200:
           description: successful operation
@@ -307,7 +342,32 @@ paths:
         500:
           description: internal server error
           content: {}
-      x-codegen-request-body-name: accountId
+  /auth/loggedAccount:
+    get:
+      tags:
+      - auth
+      summary: Get logged account
+      operationId: "getLoggedAccount"
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+  /auth/isAdmin:
+    get:
+      tags:
+      - auth
+      summary: Check if the user is admin
+      operationId: "isAdmin"
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
       
 components:
   schemas:
