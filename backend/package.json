@@ -23,9 +23,9 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "jest": "^25.5.0",
-    "mongodb": "^3.5.6",
-    "mongoose": "^5.9.10",
+    "jest": "^25.5.4",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.12",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
   },
