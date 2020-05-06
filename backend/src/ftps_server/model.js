@@ -34,7 +34,8 @@ FtpsServerSchema.statics = {
     const ftpsServers = await this.find()
     return ftpsServers
   },
-  createFtpsServer: async function (f) {
+  createFtpsServer: async function (f, user) {
+    f.account = user._id
     const ftpsServer = await this.create(f)
     const account = await mongoose.model('Account').findById(ftpsServer.account)
     await account.addFtpsServer(ftpsServer)
