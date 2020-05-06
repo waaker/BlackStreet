@@ -14,9 +14,9 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
-  .post(async function (req, res, next) {
+  .post(utils.auth.isLoggedIn, async function (req, res, next) {
     try {
-      const ftpsServer = await FtpsServer.createFtpsServer(req.body)
+      const ftpsServer = await FtpsServer.createFtpsServer(req.body, req.user)
       res.status(201).json(ftpsServer)
     } catch (e) {
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))

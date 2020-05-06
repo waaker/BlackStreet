@@ -119,11 +119,10 @@ describe('delete', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     await Account.deleteAccount(mongooseAccount._id)
     const mongooseNonexistentFtpsServer = await FtpsServer.getFtpsServer(mongooseFtpsServer._id)
 
@@ -144,11 +143,10 @@ describe('delete', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     await Account.deleteAccounts()
     const mongooseNonexistentFtpsServer = await FtpsServer.getFtpsServer(mongooseFtpsServer._id)
 

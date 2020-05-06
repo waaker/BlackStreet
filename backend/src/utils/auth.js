@@ -35,7 +35,7 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const getLoggedAccount = (req, res, next) => {
-  res.status(200).json({ loggedAccount: req.user })
+  res.status(200).json(req.user)
 }
 
 const isAdmin = (req, res, next) => {
