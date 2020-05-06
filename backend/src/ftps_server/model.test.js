@@ -36,11 +36,10 @@ describe('insert', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
 
     expect(mongooseFtpsServer.host).toEqual(mockFtpsServer.host)
     expect(mongooseFtpsServer.port).toEqual(mockFtpsServer.port)
@@ -64,11 +63,10 @@ describe('insert', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    let mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    let mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     mongooseFtpsServer = await FtpsServer.getFtpsServer(mongooseFtpsServer._id)
 
     expect(mongooseFtpsServer.host).toEqual(mockFtpsServer.host)
@@ -93,11 +91,10 @@ describe('insert', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    await FtpsServer.createFtpsServer(mockFtpsServer)
+    await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     const FtpsServers = await FtpsServer.getFtpsServers()
 
     expect(FtpsServers.length).toEqual(1)
@@ -123,11 +120,10 @@ describe('insert', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     mongooseAccount = await Account.findById(mongooseFtpsServer.account)
 
     expect(mongooseAccount.ftpsServers.length).toEqual(1)
@@ -154,11 +150,10 @@ describe('delete', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     const mongooseDeletedFtpsServer = await FtpsServer.deleteFtpsServer(mongooseFtpsServer._id)
 
     expect(mongooseDeletedFtpsServer.host).toEqual(mockFtpsServer.host)
@@ -183,11 +178,10 @@ describe('delete', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    await FtpsServer.createFtpsServer(mockFtpsServer)
+    await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     let mongooseFtpsServers = await FtpsServer.getFtpsServers()
     expect(mongooseFtpsServers.length).toEqual(1)
 
@@ -212,11 +206,10 @@ describe('delete', () => {
       port: 21,
       user: 'myTestUser',
       password: 'myTestPassword',
-      certificate_path: 'myTestPath',
-      account: mongooseAccount._id
+      certificate_path: 'myTestPath'
     }
 
-    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer)
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
     const mongooseDeletedFtpsServer = await FtpsServer.deleteFtpsServer(mongooseFtpsServer._id)
     mongooseAccount = await Account.findById(mongooseDeletedFtpsServer.account)
 
