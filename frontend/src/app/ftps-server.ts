@@ -8,7 +8,7 @@ export interface FtpsServer {
     user: string;
     password: string;
     certificate_path?: string;
-    account: number;
+    account?: number;
     connected?: boolean;
     entries?: MatTableDataSource<Entry>;
 }

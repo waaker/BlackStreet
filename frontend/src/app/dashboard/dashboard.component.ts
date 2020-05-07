@@ -132,7 +132,6 @@ export class DashboardComponent implements OnInit {
       port: this.newServerPort.value,
       user: this.newServerUser.value,
       password: this.newServerPassword.value,
-      account: this.authService.loggedInAccountID(),
       certificate_path: this.newServerCertificatePath.value,
     };
     this.ftpsServerService.createFtpsServerRequest(ftpsServer).subscribe(
