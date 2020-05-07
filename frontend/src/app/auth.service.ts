@@ -3,6 +3,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 
+import { Account } from './account';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,60 +23,39 @@ export class AuthService {
     return this.http.post(url, {accountName, password}, { withCredentials: true });
   }
 
-  setSession(response: object) {
-    const payload = JSON.parse(JSON.stringify(response));
-    delete payload.message;
-    localStorage.setItem('session', JSON.stringify(payload));
-    this.loggedIn = true;
-    this.checkAdmin();
+  isLoggedInRequest(): Observable<object> {
+    const url = `${this.authUrl}/isLoggedIn`;
+    return this.http.get(url, { withCredentials: true });
   }
 
-  isLoggedIn(): boolean {
-    if (localStorage.getItem('session') == null) {
-      this.loggedIn = false;
-      return this.loggedIn;
-    } else {
-      return true;
-    }
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedIn = loggedIn;
   }
 
-  loggedInAccountID(): number {
-    return JSON.parse(localStorage.getItem('session')).id;
+  getLoggedIn(): boolean {
+    return this.loggedIn;
   }
 
-  isAdmin() {
-    return this.admin;
-  }
-
-  checkAdmin() {
-    this.isAdminRequest().subscribe(
-      (response) => {
-        console.log(response);
-        this.admin = true;
-      }, (e: Error) => {
-        console.error(e);
-        this.admin = false;
-      }
-    );
+  getLoggedAccountRequest(): Observable<Account> {
+    const url = `${this.authUrl}/loggedAccount`;
+    return this.http.get<Account>(url, { withCredentials: true });
   }
 
   isAdminRequest(): Observable<object> {
-    console.log('e');
     const url = `${this.authUrl}/isAdmin`;
-    const accountInfo = localStorage.getItem('session');
-    return this.http.post(url, { accountInfo }, { withCredentials: true });
+    return this.http.get(url, { withCredentials: true });
+  }
+
+  setAdmin(admin: boolean) {
+    this.admin = admin;
+  }
+
+  getAdmin() {
+    return this.admin;
   }
 
   logoutRequest(): Observable<HttpResponse<object>> {
     const url = `${this.authUrl}/logout`;
     return this.http.post(url, {}, { observe: 'response', withCredentials: true });
-  }
-
-  unsetSession(response: HttpResponse<object>) {
-    if (response.status === 200) {
-      this.loggedIn = false;
-      localStorage.removeItem('session');
-      this.checkAdmin();
-    }
   }
 }

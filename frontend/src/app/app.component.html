@@ -1,9 +1,9 @@
 <mat-toolbar role="heading" class="toolbar z-depth-4" color=primary>
-  <a mat-button routerLink="/dashboard" *ngIf="authService.isLoggedIn()">Dashboard</a>
-  <a mat-button routerLink="/admin" *ngIf="authService.isAdmin()">Admin</a>
+  <a mat-button routerLink="/dashboard" *ngIf="authService.getLoggedIn()">Dashboard</a>
+  <a mat-button routerLink="/admin" *ngIf="authService.getAdmin()">Admin</a>
   <span class="fill-remaining-space"></span>
-  <a mat-button routerLink="/login" *ngIf="!authService.isLoggedIn()">Login</a>
-  <a mat-button (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
+  <a mat-button routerLink="/login" *ngIf="!authService.getLoggedIn()">Login</a>
+  <a mat-button (click)="logout()" *ngIf="authService.getLoggedIn()">Logout</a>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

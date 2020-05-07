@@ -16,13 +16,37 @@ export class AppComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.authService.checkAdmin();
+    this.initApp();
+  }
+
+  initApp() {
+    this.authService.isLoggedInRequest().subscribe(
+      () => {
+        this.authService.setLoggedIn(true);
+        this.authService.isAdminRequest().subscribe(
+            () => {
+              this.authService.setAdmin(true);
+              this.router.navigateByUrl('/dashboard');
+            }, (e: Error) => {
+              console.error(e);
+              this.authService.setAdmin(false);
+              this.router.navigateByUrl('/dashboard');
+            }, () => {
+            }
+          );
+        }, (e: Error) => {
+          console.error(e);
+          this.authService.setLoggedIn(false);
+          this.router.navigateByUrl('/');
+      }
+    );
   }
 
   logout() {
     this.authService.logoutRequest().subscribe(
-      (response) => {
-        this.authService.unsetSession(response);
+      () => {
+        this.authService.setLoggedIn(false);
+        this.authService.setAdmin(false);
       }, (e) => {
         console.error(e);
       }, () => {

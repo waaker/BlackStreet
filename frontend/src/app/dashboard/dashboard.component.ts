@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatTable, MatTableDataSource } from '@angular/material';
 import { MatSort } from '@angular/material/sort';
 
-import { AccountService } from '../account.service';
 import { AuthService } from '../auth.service';
 import { FtpsServerService } from '../ftps-server.service';
 
@@ -35,7 +34,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService,
     private authService: AuthService,
     private ftpsServerService: FtpsServerService
     ) { }
@@ -49,12 +47,9 @@ export class DashboardComponent implements OnInit {
     this.newServerForm.addControl('newServerSecured', this.newServerSecured);
     this.newServerForm.addControl('newServerCertificatePath', this.newServerCertificatePath);
 
-    this.accountService.getLoggedAccount().subscribe(
-      (response) => {
+    this.authService.getLoggedAccountRequest().subscribe(
+      (response: Account) => {
         this.account = response;
-      }, (e) => {
-        console.log(e);
-      }, () => {
         this.account.ftpsServers.forEach(serverId => {
           this.ftpsServerService.getFtpsServerRequest(serverId).subscribe(
             async (server) => {
@@ -64,11 +59,13 @@ export class DashboardComponent implements OnInit {
               if (server.connected) {
                 this.listEntries(server, '/');
               }
-            }, (e) => {
-              console.log(e);
+            }, (e: Error) => {
+              console.error(e);
             }
           );
         });
+      }, (e: Error) => {
+        console.error(e);
       }
     );
   }

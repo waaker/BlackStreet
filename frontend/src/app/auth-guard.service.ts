@@ -18,15 +18,15 @@ export class AuthGuardService implements CanActivate {
     const requiresLogin = route.data.requiresLogin || false;
     const requiresLogout = route.data.requiresLogout || false;
     if (requiresAdmin) {
-      if (!this.authService.isAdmin()) {
+      if (!this.authService.getAdmin()) {
         this.router.navigateByUrl('/not-found');
       }
     } else if (requiresLogin) {
-      if (!this.authService.isLoggedIn()) {
+      if (!this.authService.getLoggedIn()) {
         this.router.navigateByUrl('/login');
       }
     } else if (requiresLogout) {
-      if (this.authService.isLoggedIn()) {
+      if (this.authService.getLoggedIn()) {
         this.router.navigateByUrl('/dashboard');
       }
     }

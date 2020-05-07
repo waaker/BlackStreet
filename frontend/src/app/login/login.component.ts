@@ -33,13 +33,22 @@ export class LoginComponent implements OnInit {
   onSubmitForm() {
     this.loginError = false;
     this.authService.loginRequest(this.accountName.value, this.password.value).subscribe(
-      (loginResponse) => {
-        this.authService.setSession(loginResponse);
-      }, (e) => {
-        this.loginError = true;
+      () => {
+        this.loginError = false;
+        this.authService.setLoggedIn(true);
+        this.authService.isAdminRequest().subscribe(
+          () => {
+            this.authService.setAdmin(true);
+          }, (e: Error) => {
+            console.error(e);
+            this.authService.setAdmin(false);
+          }, () => {
+            this.router.navigateByUrl('/dashboard');
+          }
+        );
+      }, (e: Error) => {
         console.error(e);
-      }, () => {
-        this.router.navigateByUrl('/dashboard');
+        this.loginError = true;
       }
     );
   }
