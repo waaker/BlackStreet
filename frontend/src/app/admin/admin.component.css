@@ -1,0 +1,25 @@
+mat-expansion-panel {
+    margin: 20px;
+    max-width: 500px;
+}
+
+mat-panel-title {
+    font-weight: bold;
+}
+
+.my-mat-expansion-panel-body {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-form-field {
+    width: auto;
+}
+
+mat-action-row {
+    border-top: 0;
+}
+
+.my-button {
+    margin: 0px 10px;
+}
