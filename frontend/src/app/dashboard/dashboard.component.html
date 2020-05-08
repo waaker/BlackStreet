@@ -13,8 +13,8 @@
                 <span class="server-host">{{ server.host }}</span>
                 <div class="server-status">{{ server.connected ? "Connected" : "Disconnected" }}</div>
                 <span class="fill-remaining-space"></span>
-                <button mat-flat-button (click)="this.toggleConnect(server)" [color]="server.connected ? 'warn' : 'accent'" class="server-button">{{ server.connected ? "Stop" : "Connect" }}</button>
-                <button mat-flat-button (click)="this.deleteFtpsServer(server)" color="warn">Delete</button>
+                <button mat-flat-button class="my-button" (click)="toggleConnect(server)" [color]="server.connected ? 'warn' : 'accent'">{{ server.connected ? "Stop" : "Connect" }}</button>
+                <button mat-flat-button class="my-button" (click)="deleteFtpsServer(server)" color="warn">Delete</button>
               </div>
             </div>
             <mat-divider></mat-divider>
@@ -53,8 +53,8 @@
               <mat-error *ngIf="newServerCertificatePath.invalid">You must enter a value</mat-error>
             </mat-form-field>
             <mat-action-row>
-              <button mat-flat-button color="warn" (click)="this.newServerForm.reset()">Clear</button>
-              <button mat-flat-button color="primary" type="submit">Submit</button>
+              <button mat-flat-button class="my-button" color="primary" type="submit">Submit</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="this.newServerForm.reset()">Clear</button>
             </mat-action-row>
           </form>
         </mat-expansion-panel>

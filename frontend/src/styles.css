@@ -7,3 +7,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .fill-remaining-space {
     flex: 1 1 auto;
 }
+
+.my-component-body {
+    margin: 0px 30px;
+}
+
+.my-mat-tab-body {
+    display: flex;
+    flex-direction: column;
+    margin: 25px 50px;
+}
+
+mat-icon {
+    cursor: pointer;
+}
