@@ -17,7 +17,6 @@ import { FtpsServer } from '../ftps-server';
 })
 export class DashboardComponent implements OnInit {
 
-  @Input() account: Account;
   @Input() ftpsServers: FtpsServer[] = [];
   private newServerForm: FormGroup;
   private newServerHost = new FormControl('', [Validators.required]);
@@ -48,9 +47,8 @@ export class DashboardComponent implements OnInit {
     this.newServerForm.addControl('newServerCertificatePath', this.newServerCertificatePath);
 
     this.authService.getLoggedAccountRequest().subscribe(
-      (response: Account) => {
-        this.account = response;
-        this.account.ftpsServers.forEach(serverId => {
+      (account: Account) => {
+        account.ftpsServers.forEach(serverId => {
           this.ftpsServerService.getFtpsServerRequest(serverId).subscribe(
             async (server) => {
               await this.checkConnectionStatus(server);
