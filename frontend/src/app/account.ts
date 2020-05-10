@@ -1,9 +1,9 @@
 import { FtpsServer } from './ftps-server';
 
 export interface Account {
-    _id: number;
+    _id?: number;
     accountName: string;
     password?: string;
     hash?: string;
-    ftpsServers: number[];
+    ftpsServers?: number[];
 }

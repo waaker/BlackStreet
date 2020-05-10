@@ -20,12 +20,16 @@ export class AccountService {
     return this.http.get<Account[]>(this.accountUrl, { withCredentials: true });
   }
 
+  createAccountRequest(account: Account): Observable<Account> {
+    return this.http.post<Account>(this.accountUrl, account, { withCredentials: true });
+  }
+
   updateAccountRequest(account: Account): Observable<Account> {
     const url = `${this.accountUrl}/${account._id}`;
     return this.http.put<Account>(url, account, { withCredentials: true });
   }
 
-  deleteAccount(id: number): Observable<Account> {
+  deleteAccountRequest(id: number): Observable<Account> {
     const url = `${this.accountUrl}/${id}`;
     return this.http.delete<Account>(url, { withCredentials: true });
   }

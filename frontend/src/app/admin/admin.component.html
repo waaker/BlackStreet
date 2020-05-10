@@ -11,28 +11,50 @@
               <mat-panel-title>{{ account.accountName | titlecase }}</mat-panel-title>
             </mat-expansion-panel-header>
             <div class="subtitle" *ngIf="account._id === loggedAccount._id">This is you</div>
-              <div class="my-mat-expansion-panel-body">
-                <mat-form-field color="accent">
-                  <mat-label>Account name</mat-label>
-                  <input matInput [(ngModel)]="account.accountName">
-                </mat-form-field>
-                <mat-form-field color="accent">
-                  <mat-label>Password</mat-label>
-                  <input matInput [(ngModel)]="account.password" [type]="hide ? 'password' : 'text'">
-                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </mat-form-field>
-                <mat-form-field color="accent">
-                  <mat-label>Validate password</mat-label>
-                  <input matInput [(ngModel)]="validatePassword" [type]="hide ? 'password' : 'text'">
-                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </mat-form-field>
-              </div>
-              <mat-action-row>
-                <button mat-flat-button class="my-button" color="primary" (click)="updateAccount(account)">Save Changes</button>
-                <button mat-flat-button class="my-button" color="warn" (click)="deleteAccount(account)">Delete</button>
-              </mat-action-row>
+            <div class="my-mat-expansion-panel-body">
+              <mat-form-field color="accent">
+                <mat-label>Account name</mat-label>
+                <input matInput [(ngModel)]="account.accountName">
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)]="account.password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Validate password</mat-label>
+                <input matInput [(ngModel)]="validatePassword" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" (click)="updateAccount(account)">Save Changes</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="deleteAccount(account)">Delete</button>
+            </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
+        <mat-expansion-panel class="my-new-user-form">
+          <mat-expansion-panel-header>
+            <mat-panel-title>New account</mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="newAccountForm" (ngSubmit)="submitNewAccountForm()" class="form-field-container">
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>User</mat-label>
+              <input matInput class="form-control" formControlName="newAccountName">
+              <mat-error *ngIf="newAccountName.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Password</mat-label>
+              <input matInput class="form-control" formControlName="newAccountPassword" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="newAccountPassword.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" type="submit">Submit</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="this.newAccountForm.reset()">Clear</button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
       </div>
     </mat-tab>
     <mat-tab label="FTPS Servers">
