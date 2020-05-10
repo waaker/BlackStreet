@@ -64,6 +64,14 @@ AccountSchema.statics = {
     const account = await this.findById(id)
     return account
   },
+  updateAccount: async function (id, a) {
+    const account = await this.findByIdAndUpdate(id, a, {
+      new: true
+    })
+    await account.generateHash(a.password)
+    await account.save()
+    return account
+  },
   deleteAccount: async function (id) {
     let account = await this.findById(id)
     const ftpsServersToDelete = account.ftpsServers.slice()

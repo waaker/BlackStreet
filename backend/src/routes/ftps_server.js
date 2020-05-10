@@ -41,6 +41,14 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
+  .put(async function (req, res, next) {
+    try {
+      const ftpsServer = await FtpsServer.updateFtpsServer(req.params.serverId, req.body)
+      res.status(200).json(ftpsServer)
+    } catch (e) {
+      res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
+    }
+  })
   .delete(async function (req, res, next) {
     try {
       const ftpsServer = await FtpsServer.deleteFtpsServer(req.params.serverId)

@@ -54,6 +54,12 @@ FtpsServerSchema.statics = {
     const ftpsServer = await this.findById(id)
     return ftpsServer
   },
+  updateFtpsServer: async function (id, f) {
+    const ftpsServer = await this.findByIdAndUpdate(id, f, {
+      new: true
+    })
+    return ftpsServer
+  },
   deleteFtpsServer: async function (id) {
     const ftpsServer = await this.findByIdAndDelete(id)
     const account = await mongoose.model('Account').findById(ftpsServer.account)

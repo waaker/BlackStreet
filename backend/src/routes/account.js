@@ -40,6 +40,14 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
+  .put(async function (req, res, next) {
+    try {
+      const account = await Account.updateAccount(req.params.accountId, req.body)
+      res.status(200).json(account)
+    } catch (e) {
+      res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
+    }
+  })
   .delete(async function (req, res, next) {
     try {
       const account = await Account.deleteAccount(req.params.accountId)
