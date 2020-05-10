@@ -30,8 +30,8 @@ export class FtpsServerService {
       return this.http.get<FtpsServer>(url, { withCredentials: true });
     }
 
-    updateFtpsServerRequest(id: number, ftpsServer: FtpsServer): Observable<FtpsServer> {
-      const url = `${this.ftpsServerUrl}/${id}`;
+    updateFtpsServerRequest(ftpsServer: FtpsServer): Observable<FtpsServer> {
+      const url = `${this.ftpsServerUrl}/${ftpsServer._id}`;
       return this.http.put<FtpsServer>(url, ftpsServer, { withCredentials: true });
     }
 

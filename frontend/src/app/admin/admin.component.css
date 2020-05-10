@@ -7,6 +7,12 @@ mat-panel-title {
     font-weight: bold;
 }
 
+.subtitle {
+    font-size: small;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
 .my-mat-expansion-panel-body {
     display: flex;
     flex-direction: column;

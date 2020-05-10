@@ -10,26 +10,27 @@
             <mat-expansion-panel-header>
               <mat-panel-title>{{ account.accountName | titlecase }}</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="my-mat-expansion-panel-body">
-              <mat-form-field>
-                <mat-label>Account name</mat-label>
-                <input matInput [(ngModel)]="account.accountName">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Current password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
-                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>New password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
-                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </mat-form-field>
-            </div>
-            <mat-action-row>
-              <button mat-flat-button class="my-button" color="primary" (click)="updateAccount(account)">Save Changes</button>
-              <button mat-flat-button class="my-button" color="warn" (click)="deleteAccount(account)">Delete</button>
-            </mat-action-row>
+            <div class="subtitle" *ngIf="account._id === loggedAccount._id">This is you</div>
+              <div class="my-mat-expansion-panel-body">
+                <mat-form-field color="accent">
+                  <mat-label>Account name</mat-label>
+                  <input matInput [(ngModel)]="account.accountName">
+                </mat-form-field>
+                <mat-form-field color="accent">
+                  <mat-label>Password</mat-label>
+                  <input matInput [(ngModel)]="account.password" [type]="hide ? 'password' : 'text'">
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+                <mat-form-field color="accent">
+                  <mat-label>Validate password</mat-label>
+                  <input matInput [(ngModel)]="validatePassword" [type]="hide ? 'password' : 'text'">
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+              </div>
+              <mat-action-row>
+                <button mat-flat-button class="my-button" color="primary" (click)="updateAccount(account)">Save Changes</button>
+                <button mat-flat-button class="my-button" color="warn" (click)="deleteAccount(account)">Delete</button>
+              </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
@@ -42,28 +43,28 @@
               <mat-panel-title>{{ getAccountName(server.account) | titlecase }}: {{ server.host }}</mat-panel-title>
             </mat-expansion-panel-header>
             <div class="my-mat-expansion-panel-body">
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>Account</mat-label>
                 <input matInput disabled="true" value="{{ getAccountName(server.account) }}">
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>Host</mat-label>
                 <input matInput [(ngModel)]="server.host">
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>Port</mat-label>
                 <input matInput [(ngModel)]="server.port">
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>User</mat-label>
                 <input matInput [(ngModel)]="server.user">
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>Password</mat-label>
                 <input matInput [(ngModel)]="server.password" [type]="hide ? 'password' : 'text'">
                 <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>Certificate path</mat-label>
                 <input matInput [(ngModel)]="server.certificate_path">
               </mat-form-field>

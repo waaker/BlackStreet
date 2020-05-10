@@ -20,8 +20,8 @@ export class AccountService {
     return this.http.get<Account[]>(this.accountUrl, { withCredentials: true });
   }
 
-  updateAccountRequest(id: number, account: Account): Observable<Account> {
-    const url = `${this.accountUrl}/${id}`;
+  updateAccountRequest(account: Account): Observable<Account> {
+    const url = `${this.accountUrl}/${account._id}`;
     return this.http.put<Account>(url, account, { withCredentials: true });
   }
 
