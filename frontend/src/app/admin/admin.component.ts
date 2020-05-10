@@ -17,6 +17,7 @@ import { FtpsServer } from '../ftps-server';
 })
 export class AdminComponent implements OnInit {
 
+  private ready = false;
   private loggedAccount: Account;
   @Input() accounts: Account[];
   @Input() ftpsServers: FtpsServer[];
@@ -42,20 +43,21 @@ export class AdminComponent implements OnInit {
     this.authService.getLoggedAccountRequest().subscribe(
       (loggedAccount: Account) => {
         this.loggedAccount = loggedAccount;
-      }, (e: Error) => {
-        console.error(e);
-      }
-    );
-    this.accountService.getAccountsRequest().subscribe(
-      (accounts: Account[]) => {
-        this.accounts = accounts;
-      }, (e: Error) => {
-        console.error(e);
-      }
-    );
-    this.ftpsServerService.getFtpsServersRequest().subscribe(
-      (ftpsServers: FtpsServer[]) => {
-        this.ftpsServers = ftpsServers;
+        this.accountService.getAccountsRequest().subscribe(
+          (accounts: Account[]) => {
+            this.accounts = accounts;
+            this.ftpsServerService.getFtpsServersRequest().subscribe(
+              (ftpsServers: FtpsServer[]) => {
+                this.ftpsServers = ftpsServers;
+                this.ready = true;
+              }, (e: Error) => {
+                console.error(e);
+              }
+            );
+          }, (e: Error) => {
+            console.error(e);
+          }
+        );
       }, (e: Error) => {
         console.error(e);
       }
