@@ -5,11 +5,11 @@ const login = () => {
     try {
       passport.authenticate('login', async (err, account, info) => {
         if (err) {
-          throw err
+          res.status(401).json(err)
         } else {
           req.login(account, function (err) {
             if (err) {
-              throw err
+              res.status(401).json(err)
             } else {
               res.status(200).json({ loggedIn: true })
             }
