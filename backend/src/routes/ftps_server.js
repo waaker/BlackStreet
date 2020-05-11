@@ -7,6 +7,7 @@ const router = express.Router()
 router
   .route('/')
   .get(
+    utils.auth.isLoggedInMW,
     utils.auth.isAdminMW,
     async function (req, res, next) {
       try {
@@ -29,6 +30,7 @@ router
     }
   )
   .delete(
+    utils.auth.isLoggedInMW,
     utils.auth.isAdminMW,
     async function (req, res, next) {
       try {
@@ -43,6 +45,7 @@ router
 router
   .route('/:serverId')
   .get(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     async function (req, res, next) {
       try {
@@ -54,6 +57,7 @@ router
     }
   )
   .put(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     async function (req, res, next) {
       try {
@@ -65,6 +69,7 @@ router
     }
   )
   .delete(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     async function (req, res, next) {
       try {
@@ -79,6 +84,7 @@ router
 router
   .route('/:serverId/connect')
   .get(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     utils.ftps.connectMW,
     async function (req, res, next) {}
@@ -87,6 +93,7 @@ router
 router
   .route('/:serverId/isConnected')
   .get(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     utils.ftps.isConnectedMW,
     async function (req, res, next) {
@@ -97,6 +104,7 @@ router
 router
   .route('/:serverId/disconnect')
   .get(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     utils.ftps.isConnectedMW,
     utils.ftps.disconnectMW,
@@ -106,6 +114,7 @@ router
 router
   .route('/:serverId/list')
   .post(
+    utils.auth.isLoggedInMW,
     utils.auth.isServerOwnerOrAdminMW,
     utils.ftps.isConnectedMW,
     utils.ftps.listMW,
