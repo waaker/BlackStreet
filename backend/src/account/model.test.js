@@ -27,6 +27,7 @@ describe('insert', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -40,6 +41,7 @@ describe('insert', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -54,6 +56,7 @@ describe('insert', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -75,6 +78,7 @@ describe('delete', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -91,6 +95,7 @@ describe('delete', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -109,6 +114,7 @@ describe('delete', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 
@@ -133,6 +139,7 @@ describe('delete', () => {
     const mockAccount = {
       accountName: 'myTestAccount',
       password: 'myTestPassword',
+      role: 'user',
       ftpsServers: []
     }
 

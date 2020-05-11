@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const assert = require('assert')
 const { Schema } = mongoose
 const { ObjectId } = Schema.Types
+const { ROLES } = require('../utils')
 
 const AccountSchema = new Schema({
   accountName: {
@@ -10,6 +12,10 @@ const AccountSchema = new Schema({
     unique: true
   },
   hash: {
+    type: String,
+    required: true
+  },
+  role: {
     type: String,
     required: true
   },
@@ -44,6 +50,7 @@ AccountSchema.statics = {
     return accounts
   },
   createAccount: async function (a) {
+    assert(Object.values(ROLES).includes(a.role))
     const account = await new this(a)
     await account.generateHash(a.password)
     await account.save()
@@ -65,6 +72,7 @@ AccountSchema.statics = {
     return account
   },
   updateAccount: async function (id, a) {
+    assert(Object.values(ROLES).includes(a.role))
     const account = await this.findByIdAndUpdate(id, a, {
       new: true
     })

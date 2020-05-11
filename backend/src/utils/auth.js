@@ -47,7 +47,7 @@ const isAdminMW = (req, res, next) => {
 }
 
 const isAdminLogic = (req, res, next) => {
-  return req.user.accountName === 'admin' // TODO Implement real admin check
+  return req.user.role === 'admin'
 }
 
 const isServerOwnerOrAdminMW = (req, res, next) => {
