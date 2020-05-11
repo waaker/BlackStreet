@@ -62,11 +62,24 @@ const isServerOwnerOrAdminMW = (req, res, next) => {
   }
 }
 
+const isAccountOwnerOrAdminMW = (req, res, next) => {
+  if (req.user._id === req.params.accountId) {
+    next()
+  } else {
+    if (isAdminLogic(req, res, next)) {
+      next()
+    } else {
+      res.status(403).json({ owner: false })
+    }
+  }
+}
+
 module.exports = {
   loginMW,
   logoutMW,
   isLoggedInMW,
   getLoggedAccountMW,
   isAdminMW,
-  isServerOwnerOrAdminMW
+  isServerOwnerOrAdminMW,
+  isAccountOwnerOrAdminMW
 }

@@ -1,11 +1,12 @@
 const express = require('express')
 const { model: Account } = require('../account')
+const utils = require('../utils')
 
 const router = express.Router()
 
 router
   .route('/')
-  .get(async function (req, res, next) {
+  .get(utils.auth.isAdminMW, async function (req, res, next) {
     try {
       const accounts = await Account.getAccounts()
       res.status(200).json(accounts)
@@ -13,7 +14,7 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
-  .post(async function (req, res, next) {
+  .post(utils.auth.isAdminMW, async function (req, res, next) {
     try {
       const account = await Account.createAccount(req.body)
       res.status(201).json(account)
@@ -21,7 +22,7 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
-  .delete(async function (req, res, next) {
+  .delete(utils.auth.isAdminMW, async function (req, res, next) {
     try {
       const accounts = await Account.deleteAccounts()
       res.status(200).json(accounts)
@@ -32,7 +33,7 @@ router
 
 router
   .route('/:accountId')
-  .get(async function (req, res, next) {
+  .get(utils.auth.isAccountOwnerOrAdminMW, async function (req, res, next) {
     try {
       const account = await Account.getAccount(req.params.accountId)
       res.status(200).json(account)
@@ -40,7 +41,7 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
-  .put(async function (req, res, next) {
+  .put(utils.auth.isAdminMW, async function (req, res, next) {
     try {
       const account = await Account.updateAccount(req.params.accountId, req.body)
       res.status(200).json(account)
@@ -48,7 +49,7 @@ router
       res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
     }
   })
-  .delete(async function (req, res, next) {
+  .delete(utils.auth.isAdminMW, async function (req, res, next) {
     try {
       const account = await Account.deleteAccount(req.params.accountId)
       res.status(200).json(account)
