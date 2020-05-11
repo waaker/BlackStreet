@@ -5,7 +5,7 @@ const { model: FtpsServer } = require('../ftps_server')
 
 var ftpsClients = new Map()
 
-const connect = async (req, res, next) => {
+const connectMW = async (req, res, next) => {
   const ftpsServer = await FtpsServer.getFtpsServer(req.params.serverId)
   const ftpsClient = new ftp.Client()
 
@@ -33,7 +33,7 @@ const connect = async (req, res, next) => {
   }
 }
 
-const isConnected = (req, res, next) => {
+const isConnectedMW = (req, res, next) => {
   if (ftpsClients.has(req.params.serverId)) {
     if (!ftpsClients.get(req.params.serverId).closed) {
       return next()
@@ -46,7 +46,7 @@ const isConnected = (req, res, next) => {
   }
 }
 
-const disconnect = async (req, res, next) => {
+const disconnectMW = async (req, res, next) => {
   try {
     await ftpsClients.get(req.params.serverId).close()
     ftpsClients.delete(req.params.serverId)
@@ -56,7 +56,7 @@ const disconnect = async (req, res, next) => {
   }
 }
 
-const list = async (req, res, next) => {
+const listMW = async (req, res, next) => {
   try {
     await ftpsClients.get(req.params.serverId).cd(req.body.path)
     const list = await ftpsClients.get(req.params.serverId).list()
@@ -67,8 +67,8 @@ const list = async (req, res, next) => {
 }
 
 module.exports = {
-  connect,
-  isConnected,
-  disconnect,
-  list
+  connectMW,
+  isConnectedMW,
+  disconnectMW,
+  listMW
 }
