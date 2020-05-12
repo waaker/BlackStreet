@@ -26,6 +26,7 @@ export class AdminComponent implements OnInit {
   private newAccountForm: FormGroup;
   private newAccountName = new FormControl('', [Validators.required]);
   private newAccountPassword = new FormControl('', [Validators.required]);
+  private newAccountRole = new FormControl('user', [Validators.required]);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class AdminComponent implements OnInit {
     this.newAccountForm = this.formBuilder.group({});
     this.newAccountForm.addControl('newAccountName', this.newAccountName);
     this.newAccountForm.addControl('newAccountPassword', this.newAccountPassword);
+    this.newAccountForm.addControl('newAccountRole', this.newAccountRole);
 
     this.authService.getLoggedAccountRequest().subscribe(
       (loggedAccount: Account) => {
@@ -102,7 +104,8 @@ export class AdminComponent implements OnInit {
   submitNewAccountForm() {
     const account: Account = {
       accountName: this.newAccountName.value,
-      password: this.newAccountPassword.value
+      password: this.newAccountPassword.value,
+      role: this.newAccountRole.value
     };
     this.accountService.createAccountRequest(account).subscribe(
       () => {

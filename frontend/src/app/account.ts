@@ -5,5 +5,6 @@ export interface Account {
     accountName: string;
     password?: string;
     hash?: string;
+    role: string;
     ftpsServers?: number[];
 }

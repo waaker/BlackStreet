@@ -16,6 +16,13 @@
                 <mat-label>Account name</mat-label>
                 <input matInput [(ngModel)]="account.accountName">
               </mat-form-field>
+              <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select required [(ngModel)]="account.role">
+                  <mat-option value="user">user</mat-option>
+                  <mat-option value="admin">admin</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field color="accent">
                 <mat-label>Password</mat-label>
                 <input matInput [(ngModel)]="account.password" [type]="hide ? 'password' : 'text'">
@@ -48,6 +55,13 @@
               <input matInput class="form-control" formControlName="newAccountPassword" [type]="hide ? 'password' : 'text'">
               <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               <mat-error *ngIf="newAccountPassword.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Role</mat-label>
+              <mat-select required class="form-control" formControlName="newAccountRole">
+                <mat-option value="user">user</mat-option>
+                <mat-option value="admin">admin</mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-action-row>
               <button mat-flat-button class="my-button" color="primary" type="submit">Submit</button>
