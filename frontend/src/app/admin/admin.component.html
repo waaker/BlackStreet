@@ -18,7 +18,7 @@
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Role</mat-label>
-                <mat-select required [(ngModel)]="account.role">
+                <mat-select required [(ngModel)]="account.role" [disabled]="nbAdmin === 1 && account.role === 'admin'" matTooltip="There must be at least 1 admin." matTooltipPosition="right" [matTooltipDisabled]="nbAdmin > 1 || account.role !== 'admin'">
                   <mat-option value="user">user</mat-option>
                   <mat-option value="admin">admin</mat-option>
                 </mat-select>

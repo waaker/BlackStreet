@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit {
   private ready = false;
   private loggedAccount: Account;
   @Input() accounts: Account[];
+  private nbAdmin: number;
   @Input() ftpsServers: FtpsServer[];
   private hide = true;
   private validatePassword: string;
@@ -48,10 +49,17 @@ export class AdminComponent implements OnInit {
         this.accountService.getAccountsRequest().subscribe(
           (accounts: Account[]) => {
             this.accounts = accounts;
-            this.ftpsServerService.getFtpsServersRequest().subscribe(
-              (ftpsServers: FtpsServer[]) => {
-                this.ftpsServers = ftpsServers;
-                this.ready = true;
+            this.accountService.getNbAdmin().subscribe(
+              (response: object) => {
+                this.nbAdmin = JSON.parse(JSON.stringify(response)).nbAdmin;
+                this.ftpsServerService.getFtpsServersRequest().subscribe(
+                  (ftpsServers: FtpsServer[]) => {
+                    this.ftpsServers = ftpsServers;
+                    this.ready = true;
+                  }, (e: Error) => {
+                    console.error(e);
+                  }
+                );
               }, (e: Error) => {
                 console.error(e);
               }
