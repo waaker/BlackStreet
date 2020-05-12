@@ -6,26 +6,44 @@ const router = express.Router()
 
 router
   .route('/login')
-  .post(utils.auth.login(), async function (req, res, next) {})
+  .post(
+    utils.auth.loginMW(),
+    async function (req, res, next) {}
+  )
 
 router
   .route('/logout')
-  .post(utils.auth.isLoggedIn, utils.auth.logout, async function (req, res, next) {})
+  .post(
+    utils.auth.isLoggedInMW,
+    utils.auth.logoutMW,
+    async function (req, res, next) {}
+  )
 
 router
   .route('/isLoggedIn')
-  .get(utils.auth.isLoggedIn, async function (req, res, next) {
-    res.status(200).json({ isLoggedIn: true })
-  })
+  .get(
+    utils.auth.isLoggedInMW,
+    async function (req, res, next) {
+      res.status(200).json({ isLoggedIn: true })
+    }
+  )
 
 router
   .route('/loggedAccount')
-  .get(utils.auth.isLoggedIn, utils.auth.getLoggedAccount, async function (req, res, next) {})
+  .get(
+    utils.auth.isLoggedInMW,
+    utils.auth.getLoggedAccountMW,
+    async function (req, res, next) {}
+  )
 
 router
   .route('/isAdmin')
-  .get(utils.auth.isLoggedIn, utils.auth.isAdmin, async function (req, res, next) {
-    res.status(200).json({ isAdmin: true })
-  })
+  .get(
+    utils.auth.isLoggedInMW,
+    utils.auth.isAdminMW,
+    async function (req, res, next) {
+      res.status(200).json({ isAdmin: true })
+    }
+  )
 
 module.exports = router
