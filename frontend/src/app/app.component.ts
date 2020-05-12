@@ -26,16 +26,14 @@ export class AppComponent implements OnInit {
         this.authService.isAdminRequest().subscribe(
             () => {
               this.authService.setAdmin(true);
-              this.router.navigateByUrl('/dashboard');
-            }, (e: Error) => {
-              console.error(e);
+            }, () => {
               this.authService.setAdmin(false);
               this.router.navigateByUrl('/dashboard');
             }, () => {
+              this.router.navigateByUrl('/dashboard');
             }
           );
-        }, (e: Error) => {
-          console.error(e);
+        }, () => {
           this.authService.setLoggedIn(false);
           this.router.navigateByUrl('/');
       }

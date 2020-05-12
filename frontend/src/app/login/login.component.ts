@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
         this.authService.isAdminRequest().subscribe(
           () => {
             this.authService.setAdmin(true);
-          }, (e: Error) => {
-            console.error(e);
+          }, () => {
             this.authService.setAdmin(false);
+            this.router.navigateByUrl('/dashboard');
           }, () => {
             this.router.navigateByUrl('/dashboard');
           }
