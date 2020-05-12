@@ -24,7 +24,7 @@ const connectMW = async (req, res, next) => {
     ftpsClients.set(req.params.serverId, ftpsClient)
 
     if (resp.code === 220) {
-      res.status(200).send({ connected: true })
+      return res.status(200).send({ connected: true })
     } else {
       throw new Error('Response code is not 220')
     }
@@ -50,9 +50,9 @@ const disconnectMW = async (req, res, next) => {
   try {
     await ftpsClients.get(req.params.serverId).close()
     ftpsClients.delete(req.params.serverId)
-    res.status(200).send({ connected: false })
+    return res.status(200).send({ connected: false })
   } catch (err) {
-    res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+    return res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
   }
 }
 
@@ -60,9 +60,9 @@ const listMW = async (req, res, next) => {
   try {
     await ftpsClients.get(req.params.serverId).cd(req.body.path)
     const list = await ftpsClients.get(req.params.serverId).list()
-    res.status(200).send(list)
+    return res.status(200).send(list)
   } catch (err) {
-    res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
+    return res.status(500).json(JSON.stringify(err, Object.getOwnPropertyNames(err)))
   }
 }
 

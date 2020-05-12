@@ -5,26 +5,26 @@ const loginMW = () => {
     try {
       passport.authenticate('login', async (err, account, info) => {
         if (err) {
-          res.status(401).json(err)
+          return res.status(401).json(err)
         } else {
           req.login(account, function (err) {
             if (err) {
-              res.status(401).json(err)
+              return res.status(401).json(err)
             } else {
-              res.status(200).json({ loggedIn: true })
+              return res.status(200).json({ loggedIn: true })
             }
           })
         }
       })(req, res, next)
     } catch (err) {
-      res.status(401).json(err)
+      return res.status(401).json(err)
     }
   }
 }
 
 const logoutMW = (req, res, next) => {
   req.logout()
-  res.status(200).json({ loggedIn: false })
+  return res.status(200).json({ loggedIn: false })
 }
 
 const isLoggedInMW = (req, res, next) => {
@@ -35,14 +35,14 @@ const isLoggedInMW = (req, res, next) => {
 }
 
 const getLoggedAccountMW = (req, res, next) => {
-  res.status(200).json(req.user)
+  return res.status(200).json(req.user)
 }
 
 const isAdminMW = (req, res, next) => {
   if (isAdminLogic(req, res, next)) {
-    next()
+    return next()
   } else {
-    res.status(403).json({ isAdmin: false })
+    return res.status(403).json({ isAdmin: false })
   }
 }
 
@@ -52,24 +52,24 @@ const isAdminLogic = (req, res, next) => {
 
 const isServerOwnerOrAdminMW = (req, res, next) => {
   if (req.user.ftpsServers.includes(req.params.serverId)) {
-    next()
+    return next()
   } else {
     if (isAdminLogic(req, res, next)) {
-      next()
+      return next()
     } else {
-      res.status(403).json({ owner: false })
+      return res.status(403).json({ owner: false })
     }
   }
 }
 
 const isAccountOwnerOrAdminMW = (req, res, next) => {
   if (req.user._id === req.params.accountId) {
-    next()
+    return next()
   } else {
     if (isAdminLogic(req, res, next)) {
-      next()
+      return next()
     } else {
-      res.status(403).json({ owner: false })
+      return res.status(403).json({ owner: false })
     }
   }
 }
