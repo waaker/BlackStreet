@@ -41,6 +41,21 @@ router
     })
 
 router
+  .route('/nbAdmin')
+  .get(
+    utils.auth.isLoggedInMW,
+    utils.auth.isAdminMW,
+    async function (req, res, next) {
+      try {
+        const nbAdmin = await Account.getNbAdmin()
+        res.status(200).json({ nbAdmin: nbAdmin })
+      } catch (e) {
+        res.status(500).json(JSON.stringify(e, Object.getOwnPropertyNames(e)))
+      }
+    }
+  )
+
+router
   .route('/:accountId')
   .get(
     utils.auth.isLoggedInMW,

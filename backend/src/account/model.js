@@ -88,6 +88,12 @@ AccountSchema.statics = {
     }
     account = await this.findByIdAndDelete(id)
     return account
+  },
+  getNbAdmin: async function () {
+    const admins = await this.find(
+      { role: 'admin' }
+    )
+    return admins.length
   }
 }
 
