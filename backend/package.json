@@ -1,9 +1,10 @@
 {
-  "name": "ftps-app-server",
-  "version": "1.0.0",
-  "description": "FTPS Management - server part",
+  "name": "ftps-app-backend",
+  "version": "0.1.0",
+  "description": "FTPS Management Application - Backend",
   "main": "server.js",
   "scripts": {
+    "watch": "supervisor .",
     "test": "NODE_ENV=test jest --runInBand",
     "test_and_coverage": "NODE_ENV=test jest --runInBand --collectCoverage"
   },
