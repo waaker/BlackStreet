@@ -9,7 +9,8 @@ beforeAll(async () => {
   await mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   })
 })
 
@@ -132,6 +133,48 @@ describe('insert', () => {
 
     expect(mongooseAccount.ftpsServers.length).toEqual(1)
     expect(mongooseAccount.ftpsServers[0]).toEqual(mongooseFtpsServer._id)
+  }, 10000)
+})
+
+describe('insert', () => {
+  afterEach(async () => {
+    await Account.deleteAccounts()
+  })
+
+  it('should create a ftps server, update it, and check its integrity', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      role: 'user',
+      ftpsServers: []
+    }
+
+    const mongooseAccount = await Account.createAccount(mockAccount)
+
+    const mockFtpsServer = {
+      host: 'myTestHost',
+      port: 21,
+      user: 'myTestUser',
+      password: 'myTestPassword',
+      certificate_path: 'myTestPath'
+    }
+
+    const mongooseFtpsServer = await FtpsServer.createFtpsServer(mockFtpsServer, mongooseAccount)
+
+    mockFtpsServer.host = 'myUpdatedHost'
+    mockFtpsServer.port = 2121
+    mockFtpsServer.user = 'myUpdatedUser'
+    mockFtpsServer.password = 'myUpdatedPassword'
+    mockFtpsServer.certificate_path = 'myUpdatedPath'
+
+    const mongooseUpdatedFtpsServer = await FtpsServer.updateFtpsServer(mongooseFtpsServer._id, mockFtpsServer)
+
+    expect(mongooseUpdatedFtpsServer.host).toEqual(mockFtpsServer.host)
+    expect(mongooseUpdatedFtpsServer.port).toEqual(mockFtpsServer.port)
+    expect(mongooseUpdatedFtpsServer.user).toEqual(mockFtpsServer.user)
+    expect(mongooseUpdatedFtpsServer.password).toEqual(mockFtpsServer.password)
+    expect(mongooseUpdatedFtpsServer.certificate_path).toEqual(mockFtpsServer.certificate_path)
+    expect(mongooseUpdatedFtpsServer.account).toEqual(mockFtpsServer.account)
   }, 10000)
 })
 

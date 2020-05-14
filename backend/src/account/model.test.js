@@ -10,7 +10,8 @@ beforeAll(async () => {
   await mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database.port')}/${config.get('Database.name')}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   })
 })
 
@@ -66,6 +67,31 @@ describe('insert', () => {
     expect(mongooseAccounts.length).toEqual(1)
     expect(mongooseAccounts[0].accountName).toEqual(mockAccount.accountName)
     expect(bcrypt.compareSync(mockAccount.password, mongooseAccounts[0].hash)).toBe(true)
+  }, 10000)
+})
+
+describe('update', () => {
+  afterEach(async () => {
+    await Account.deleteAccounts()
+  })
+
+  it('should create an account, update it and check its integrity', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      role: 'user',
+      ftpsServers: []
+    }
+
+    const mongooseAccount = await Account.createAccount(mockAccount)
+
+    mockAccount.accountName = 'updatedAccountName'
+    mockAccount.password = 'updatedPassword'
+
+    const mongooseUpdatedAccount = await Account.updateAccount(mongooseAccount._id, mockAccount)
+
+    expect(mongooseUpdatedAccount.accountName).toEqual(mockAccount.accountName)
+    expect(bcrypt.compareSync(mockAccount.password, mongooseUpdatedAccount.hash)).toBe(true)
   }, 10000)
 })
 
@@ -158,5 +184,47 @@ describe('delete', () => {
     const mongooseNonexistentFtpsServer = await FtpsServer.getFtpsServer(mongooseFtpsServer._id)
 
     expect(mongooseNonexistentFtpsServer).toBeNull()
+  }, 10000)
+})
+
+describe('admin', () => {
+  afterEach(async () => {
+    await Account.deleteAccounts()
+  })
+
+  it('should create an admin account, check nbAdmin, delete the account, and check nbAdmin again', async () => {
+    const mockAccount = {
+      accountName: 'myAdminAccount',
+      password: 'myAdminPassword',
+      role: 'admin',
+      ftpsServers: []
+    }
+
+    const mongooseAccount = await Account.createAccount(mockAccount)
+    let nbAdmin = await Account.getNbAdmin()
+    expect(nbAdmin).toEqual(1)
+
+    await Account.deleteAccount(mongooseAccount._id)
+    nbAdmin = await Account.getNbAdmin()
+    expect(nbAdmin).toEqual(0)
+  }, 10000)
+})
+
+describe('password', () => {
+  afterEach(async () => {
+    await Account.deleteAccounts()
+  })
+
+  it('should create an account and check its password', async () => {
+    const mockAccount = {
+      accountName: 'myTestAccount',
+      password: 'myTestPassword',
+      role: 'user',
+      ftpsServers: []
+    }
+
+    const mongooseAccount = await Account.createAccount(mockAccount)
+    const passwordValidated = await mongooseAccount.validatePassword(mockAccount.password)
+    expect(passwordValidated).toBe(true)
   }, 10000)
 })
