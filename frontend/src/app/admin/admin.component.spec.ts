@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AdminComponent } from './admin.component';
 
@@ -30,7 +31,8 @@ describe('AdminComponent', () => {
         MatInputModule,
         MatSelectModule,
         MatSnackBarModule,
-        MatTabsModule
+        MatTabsModule,
+        MatTooltipModule
       ]
     })
     .compileComponents();
