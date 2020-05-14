@@ -1,5 +1,7 @@
 const passport = require('passport')
 
+const mongoose = require('mongoose')
+
 const loginMW = () => {
   return (req, res, next) => {
     try {
@@ -34,8 +36,9 @@ const isLoggedInMW = (req, res, next) => {
   return res.status(401).json({ isLoggedIn: false })
 }
 
-const getLoggedAccountMW = (req, res, next) => {
-  return res.status(200).json(req.user)
+const getLoggedAccountMW = async (req, res, next) => {
+  const loggedAccount = await mongoose.model('Account').getAccount(req.user._id)
+  return res.status(200).json(loggedAccount)
 }
 
 const isAdminMW = (req, res, next) => {
@@ -46,8 +49,9 @@ const isAdminMW = (req, res, next) => {
   }
 }
 
-const isAdminLogic = (req, res, next) => {
-  return req.user.role === 'admin'
+const isAdminLogic = async (req, res, next) => {
+  const loggedAccount = await mongoose.model('Account').getAccount(req.user._id)
+  return loggedAccount.role === 'admin'
 }
 
 const isServerOwnerOrAdminMW = (req, res, next) => {
