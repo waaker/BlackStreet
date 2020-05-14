@@ -5,9 +5,7 @@ info:
   license:
     name: GPL-3.0-or-later
     url: https://www.gnu.org/licenses/gpl-3.0.fr.html
-  version: 1.0.0
-servers:
-- url: http://waak.ddns.net/api
+  version: 0.1.0
 tags:
 - name: account
 - name: ftps_server
@@ -58,6 +56,19 @@ paths:
         500:
           description: internal server error
           content: {}
+  /account/nbAdmin:
+    get:
+      tags:
+      - account
+      summary: Get the number of admin
+      operationId: "getNbAdmin"
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
   /account/{accountId}:
     get:
       tags:
@@ -72,6 +83,33 @@ paths:
         schema:
           type: integer
           format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    put:
+      tags:
+      - account
+      summary: Update account
+      operationId: "updateAccount"
+      parameters:
+      - name: accountId
+        in: path
+        description: ID of account to update
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Account object to create
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
       responses:
         200:
           description: successful operation
@@ -158,6 +196,33 @@ paths:
         schema:
           type: integer
           format: int64
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: internal server error
+          content: {}
+    put:
+      tags:
+      - ftps_server
+      summary: Update FTPS server
+      operationId: "updateFtpsServer"
+      parameters:
+      - name: serverId
+        in: path
+        description: ID of FTPS server to update
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: FTPS Server object to update
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/FtpsServer'
+        required: true
       responses:
         200:
           description: successful operation
