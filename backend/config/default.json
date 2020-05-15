@@ -1,12 +1,11 @@
 {
     "General": {
         "port": 3000,
-        "session_secret": "secret",
-        "corsOrigin": "http://localhost:4200"
+        "session_secret": "secret"
     },
     "Database": {
         "uri": "localhost",
         "port": 27017,
-        "name": "ftps_app_db"
+        "name": "blackstreet_db"
     }
 }

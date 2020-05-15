@@ -6,6 +6,7 @@ const config = require('config')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const passport = require('passport')
+const path = require('path')
 
 const routes = require('./src/routes')
 
@@ -27,13 +28,17 @@ mongoose.connect(`mongodb://${config.get('Database.uri')}:${config.get('Database
   app.use(passport.initialize())
   app.use(passport.session())
 
-  app.use(cors({
-    origin: config.get('General.corsOrigin'),
-    credentials: true
-  }))
-
+  app.disable('etag')
+  app.use(cors())
   app.use(bodyParser.json())
   app.use('/', routes)
+
+  app.use(express.static('dist/frontend'))
+  app.get('*', function (req, res) {
+    res.sendFile('index.html', {
+      root: path.resolve(__dirname, 'dist/frontend')
+    })
+  })
 
   app.listen(config.get('General.port'), function () {
     console.log(`App listening on port ${config.get('General.port')}\nDatabase ${config.get('Database.name')} connected on port ${config.get('Database.port')}`)
