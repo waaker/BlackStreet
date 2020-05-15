@@ -1,0 +1,117 @@
+<div class="my-component-body" *ngIf="ready">
+  <h1>
+    Administration
+  </h1>
+  <mat-tab-group (selectedTabChange)="hide = true">
+    <mat-tab label="Accounts">
+      <div class="my-mat-tab-body">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let account of accounts" (closed)="hide = true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ account.accountName | titlecase }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="subtitle" *ngIf="account._id === loggedAccount._id">This is you</div>
+            <div class="my-mat-expansion-panel-body">
+              <mat-form-field color="accent">
+                <mat-label>Account name</mat-label>
+                <input matInput [(ngModel)]="account.accountName">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select required [(ngModel)]="account.role" [disabled]="nbAdmin === 1 && account.role === 'admin'" matTooltip="There must be at least 1 admin." matTooltipPosition="right" [matTooltipDisabled]="nbAdmin > 1 || account.role !== 'admin'">
+                  <mat-option value="user">user</mat-option>
+                  <mat-option value="admin">admin</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)]="account.password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Validate password</mat-label>
+                <input matInput [(ngModel)]="validatePassword" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" (click)="updateAccount(account)">Save Changes</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="deleteAccount(account)">Delete</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-expansion-panel class="my-new-user-form">
+          <mat-expansion-panel-header>
+            <mat-panel-title>New account</mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="newAccountForm" (ngSubmit)="submitNewAccountForm()" class="form-field-container">
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>User</mat-label>
+              <input matInput class="form-control" formControlName="newAccountName">
+              <mat-error *ngIf="newAccountName.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Password</mat-label>
+              <input matInput class="form-control" formControlName="newAccountPassword" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="newAccountPassword.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Role</mat-label>
+              <mat-select required class="form-control" formControlName="newAccountRole">
+                <mat-option value="user">user</mat-option>
+                <mat-option value="admin">admin</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" type="submit">Submit</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="this.newAccountForm.reset()">Clear</button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </div>
+    </mat-tab>
+    <mat-tab label="FTPS Servers">
+      <div class="my-mat-tab-body">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let server of ftpsServers">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ getAccountName(server.account) | titlecase }}: {{ server.host }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="my-mat-expansion-panel-body">
+              <mat-form-field color="accent">
+                <mat-label>Account</mat-label>
+                <input matInput disabled="true" value="{{ getAccountName(server.account) }}">
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Host</mat-label>
+                <input matInput [(ngModel)]="server.host">
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Port</mat-label>
+                <input matInput [(ngModel)]="server.port">
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>User</mat-label>
+                <input matInput [(ngModel)]="server.user">
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)]="server.password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-label>Certificate path</mat-label>
+                <input matInput [(ngModel)]="server.certificate_path">
+              </mat-form-field>
+            </div>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" (click)="updateFtpsServer(server)">Save Changes</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="deleteFtpsServer(server)">Delete</button>
+            </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

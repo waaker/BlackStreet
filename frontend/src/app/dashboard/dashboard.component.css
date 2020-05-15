@@ -1,0 +1,55 @@
+.my-mat-line {
+    display: flex;
+    align-items: center;
+}
+
+.server-host {
+    font-weight: bold;
+}
+
+.server-status {
+    font-style: italic;
+    margin-left: 50px;
+}
+
+.my-button {
+    margin: 0px 10px;
+}
+
+mat-expansion-panel {
+    margin-top: 40px;
+    align-self: flex-start;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-action-row {
+    padding: 20px 0px 0px;
+    border-top: 0;
+}
+
+.my-server {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-filter {
+    width: min-content;
+}
+
+.mat-row {
+    height: 36px;
+    cursor: pointer;
+}
+
+.highlighted > td {
+    color: #424242; 
+    background-color: white;
+}
+
+.mat-cell {
+    padding-right: 20px;
+}

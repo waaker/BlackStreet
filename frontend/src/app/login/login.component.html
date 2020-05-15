@@ -1,0 +1,16 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" class="form-field-container">
+  <h2>Login</h2>
+  <h3 *ngIf="loginError" class="error">Invalid credentials</h3>
+  <mat-form-field class="form-group" color=accent>
+    <mat-label>Account Name</mat-label>
+    <input matInput placeholder="Enter your account name" class="form-control" formControlName="accountName">
+    <mat-error *ngIf="accountName.invalid">You must enter a value</mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-group" color=accent>
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="Enter your password" class="form-control" formControlName="password" [type]="hide ? 'password' : 'text'">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <mat-error *ngIf="password.invalid">You must enter a value</mat-error>
+  </mat-form-field>
+  <button mat-raised-button type="submit">Submit</button>
+</form>

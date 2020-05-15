@@ -1,0 +1,105 @@
+<div class="my-component-body">
+  <h1>
+    FTPS Servers
+  </h1>
+  <mat-tab-group>
+    <mat-tab label="My servers">
+      <div class="my-mat-tab-body">
+        <mat-list>
+          <mat-list-item *ngFor="let server of ftpsServers">
+            <mat-icon mat-list-icon [color]="server.connected ? 'accent' : 'warn'">{{ server.connected ? "check_circle" : "cancel" }}</mat-icon>
+            <div mat-line>
+              <div class="my-mat-line">
+                <span class="server-host">{{ server.host }}</span>
+                <div class="server-status">{{ server.connected ? "Connected" : "Disconnected" }}</div>
+                <span class="fill-remaining-space"></span>
+                <button mat-flat-button class="my-button" (click)="toggleConnect(server)" [color]="server.connected ? 'warn' : 'accent'">{{ server.connected ? "Stop" : "Connect" }}</button>
+                <button mat-flat-button class="my-button" (click)="deleteFtpsServer(server)" color="warn">Delete</button>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>New server</mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="newServerForm" (ngSubmit)="submitNewServerForm()" class="form-field-container">
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Host</mat-label>
+              <input matInput class="form-control" formControlName="newServerHost">
+              <mat-error *ngIf="newServerHost.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Port</mat-label>
+              <input matInput class="form-control" formControlName="newServerPort">
+              <mat-error *ngIf="newServerHost.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>User</mat-label>
+              <input matInput class="form-control" formControlName="newServerUser">
+              <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Password</mat-label>
+              <input matInput class="form-control" formControlName="newServerPassword" [type]="hide ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="newServerUser.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-slide-toggle formControlName="newServerSecured" (change)="toggleSecured()" matTooltip="Only secured connections are supported at the moment." matTooltipPosition="right">Secured</mat-slide-toggle>
+            <mat-form-field class="form-group" color="accent">
+              <mat-label>Certificate path</mat-label>
+              <input matInput class="form-control" formControlName="newServerCertificatePath" matTooltip="Choose 'Secured' to add a X.509 certificate path." matTooltipPosition="right" [matTooltipDisabled]="newServerCertificatePath.enabled">
+              <mat-error *ngIf="newServerCertificatePath.invalid">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button class="my-button" color="primary" type="submit">Submit</button>
+              <button mat-flat-button class="my-button" color="warn" (click)="this.newServerForm.reset()">Clear</button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Transfer">
+      <div class="my-mat-tab-body">
+        <div *ngFor="let server of ftpsServers">
+          <div *ngIf="server.connected" class="my-server">
+            <h3>{{server.host}}</h3>
+            <mat-form-field class="my-filter">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event, server)" placeholder="">
+            </mat-form-field>
+            <button mat-icon-button (click)="dblclickRow(server, 2, '..')">
+              <mat-icon>
+                arrow_back
+              </mat-icon>
+            </button>
+            <table mat-table [dataSource]="server.entries" matSort>
+              <tr mat-header-row *matHeaderRowDef="columnsTransferTables"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsTransferTables;" (click)="clickRow(row.name)" (dblclick)="dblclickRow(server, row.type, row.name)" [class.highlighted]="selectedEntry === row.name"></tr>
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon mat-list-icon>{{ element.type === 1 ? "description" : "folder" }}</mat-icon>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="size">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Size </th>
+                <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+              </ng-container>
+              <ng-container matColumnDef="rawModifiedAt">
+                <th mat-header-cell *matHeaderCellDef> RawModifiedAt </th>
+                <td mat-cell *matCellDef="let element"> {{element.rawModifiedAt}} </td>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
