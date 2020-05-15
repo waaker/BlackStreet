@@ -41,8 +41,8 @@ const getLoggedAccountMW = async (req, res, next) => {
   return res.status(200).json(loggedAccount)
 }
 
-const isAdminMW = (req, res, next) => {
-  if (isAdminLogic(req, res, next)) {
+const isAdminMW = async (req, res, next) => {
+  if (await isAdminLogic(req, res, next)) {
     return next()
   } else {
     return res.status(403).json({ isAdmin: false })
