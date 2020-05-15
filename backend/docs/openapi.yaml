@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: ftps-app
-  description: FTPS management.
+  title: BlackStreet
+  description: FTPS management application
   license:
     name: GPL-3.0-or-later
     url: https://www.gnu.org/licenses/gpl-3.0.fr.html

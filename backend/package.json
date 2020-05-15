@@ -1,5 +1,5 @@
 {
-  "name": "ftps-app-backend",
+  "name": "blackstreet-backend",
   "version": "0.1.0",
   "description": "FTPS Management Application - Backend",
   "main": "server.js",
