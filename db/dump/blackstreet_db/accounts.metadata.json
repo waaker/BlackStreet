@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"blackstreet_db.accounts"},{"v":{"$numberInt":"2"},"unique":true,"key":{"accountName":{"$numberInt":"1"}},"name":"accountName_1","ns":"blackstreet_db.accounts","background":true}],"uuid":"5645b0270f6e40ad848c5742be8ff7fa"}

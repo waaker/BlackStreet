@@ -4,10 +4,11 @@
   "description": "FTPS Management Application",
   "main": "backend/server.js",
   "scripts": {
-    "fast": "npm install && npm run build && npm start",
+    "fast": "npm install && npm run build && npm run setup_db && npm start",
     "start": "cd backend && npm run start",
     "build": "npm run clean && cd frontend && ng build && cd .. && mkdir -p backend/dist && mv frontend/dist/frontend backend/dist",
     "clean": "rm -rf backend/dist",
+    "setup_db": "db/db_setup.sh",
     "test": "npm run tests_backend && npm run tests_frontend",
     "tests_backend": "cd backend && npm test && cd ..",
     "tests_frontend": "cd frontend && npm test && cd .."
