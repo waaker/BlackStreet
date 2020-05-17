@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   initApp() {
+    const url = location.pathname;
     this.authService.isLoggedInRequest().subscribe(
       () => {
         this.authService.setLoggedIn(true);
@@ -28,14 +29,22 @@ export class AppComponent implements OnInit {
               this.authService.setAdmin(true);
             }, () => {
               this.authService.setAdmin(false);
-              this.router.navigateByUrl('/dashboard');
+              if (url !== '/' && url !== '/login') {
+                this.router.navigateByUrl(url);
+              } else {
+                this.router.navigateByUrl('/dashboard');
+              }
             }, () => {
-              this.router.navigateByUrl('/dashboard');
+              if (url !== '/' && url !== '/login') {
+                this.router.navigateByUrl(url);
+              } else {
+                this.router.navigateByUrl('/dashboard');
+              }
             }
           );
         }, () => {
           this.authService.setLoggedIn(false);
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
       }
     );
   }
