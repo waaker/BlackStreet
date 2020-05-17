@@ -17,7 +17,6 @@ backend_test:
       - "backend/docs/*"
   only:
     - develop
-    - backend
 
 frontend_test:
   image: flat/firefox-stable
@@ -33,4 +32,3 @@ frontend_test:
       - "frontend/README.md"
   only:
     - develop
-    - frontend
