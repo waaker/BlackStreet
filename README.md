@@ -1,6 +1,8 @@
 # Black Street
 
-Black Street is a web application that allows you to connect to FTPS servers and manage your files remotely.
+***Note: The development of this application has been stopped, due to security issues related to FXP. As direct transfer between remote servers was the purpose of this application, alternative solutions using double FTPS connection and transfer through the client will not be explored. You can still use the simple FTPS connection provided by the current application to list files on remote servers.***
+
+Black Street is a web application that allows you to connect to FTPS servers and list your files remotely.
 
 ## Getting Started
 
@@ -34,10 +36,10 @@ It is recommended to create a file `local.json` in the folder `backend/config/` 
 
 ## Current features
 
-As the application is still in development, features are currently limited to the following:
+Features are limited to the following:
 * *FTPS servers*
-    * A user can create FTPS server entry, meaning supply the connection information (host, port, user, password), and then connect to the given server. Once connected, the user can navigate through the folders to list the files. Files transfer is not available yet.
-    * At this time, only secure connections are allowed. This means an FTPS server entry needs to have a `certificate_path` attribute which is the absolute path *on the system running your nodeJS server* to a valid X509 certificate for the FTPS server your are trying to connect to. Certificate direct upload is not available yet.
+    * A user can create FTPS server entry, meaning supply the connection information (host, port, user, password), and then connect to the given server. Once connected, the user can navigate through the folders to list the files. Files transfer is not available.
+    * Only secure connections are allowed. This means an FTPS server entry needs to have a `certificate_path` attribute which is the absolute path *on the system running your nodeJS server* to a valid X509 certificate for the FTPS server your are trying to connect to. Certificate direct upload is not available.
     * Any administrator has the ability to create, update, or delete any FTPS server entry.
 * *Accounts*
     * Any administrator has the ability to create, update, delete, or change permissions of the accounts. 
